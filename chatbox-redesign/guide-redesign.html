@@ -399,6 +399,14 @@
             <button class="item-btn" data-topic="macos-app-damaged">macOS 提示应用已损坏</button>
           </div>
         </section>
+        <section class="group" data-group="more-guides">
+          <button class="group-head" type="button"><span class="group-arrow">▾</span><span>更多指南</span></button>
+          <div class="group-items">
+            <button class="item-btn" data-topic="remote-ollama-guide">在 Chatbox 中使用远程 Ollama</button>
+            <button class="item-btn" data-topic="lm-studio-guide">在 Chatbox 中使用 LM Studio</button>
+            <button class="item-btn" data-topic="embracing-ai-skill">Embracing AI: The Essential Skill for Tomorrow's World</button>
+          </div>
+        </section>
       </aside>
 
       <article class="content">
@@ -600,6 +608,39 @@
         subTitle: "解决步骤",
         points: ["确认安装包来源", "移除隔离属性后重新打开", "检查系统安全与隐私设置"]
       },
+      "remote-ollama-guide": {
+        title: "在 Chatbox 中使用远程 Ollama",
+        intro: "你可以把 Ollama 跑在家里电脑或服务器上，再让手机和其他电脑通过 Chatbox 连接。这个方式适合本地隐私场景，也能减少在线 API 成本。",
+        subTitle: "关键配置",
+        points: [
+          "安装并运行 Ollama，本地先确认模型可用（例如：ollama run llama3.2）。",
+          "远程访问需设置环境变量：OLLAMA_HOST=0.0.0.0 与 OLLAMA_ORIGINS=*。",
+          "在 Chatbox 中将提供方设为 Ollama，API Host 填 http://你的局域网IP:11434。",
+          "放行 11434 端口并仅在可信局域网使用，不建议暴露到公网。"
+        ]
+      },
+      "lm-studio-guide": {
+        title: "在 Chatbox 中使用 LM Studio",
+        intro: "Chatbox 可直接连接 LM Studio 服务，复用你本地模型并获得会话管理、Prompt 管理等能力。",
+        subTitle: "操作步骤",
+        points: [
+          "在 LM Studio 开启 Developer 模式，并打开 Server（Status 显示 running）。",
+          "若需跨设备连接，额外开启 Enable CORS 与 Serve on Local Network。",
+          "复制 LM Studio 的 API Host，在 Chatbox 里选择 LM Studio 后粘贴并保存。",
+          "保存后可在模型下拉中看到 LM Studio 已下载模型并开始使用。"
+        ]
+      },
+      "embracing-ai-skill": {
+        title: "Embracing AI: The Essential Skill for Tomorrow's World",
+        intro: "AI 工具正在重塑工作方式。熟练使用 Chatbox 这类跨平台 AI 客户端，能直接提升效率、创造力与职业竞争力。",
+        subTitle: "核心价值",
+        points: [
+          "文件与图片理解：支持 PDF、DOC、PPT、XLS 与图片内容分析。",
+          "开发效率提升：代码生成、调试辅助与结构化输出更快落地。",
+          "数据与创意能力：图表可视化与文生图能力支持多种业务场景。",
+          "本地隐私与安全：强调本地存储和可控的数据使用方式。"
+        ]
+      },
       "service-faq": {
         title: "服务常见问题",
         intro: "这里汇总服务使用中的高频问题，例如套餐升级、额度变化、支付状态与下载入口。",
@@ -662,7 +703,10 @@
       troubleshooting: "faq",
       "model-identity": "faq",
       "macos-app-damaged": "faq",
-      shortcuts: "faq"
+      shortcuts: "faq",
+      "remote-ollama-guide": "more-guides",
+      "lm-studio-guide": "more-guides",
+      "embracing-ai-skill": "more-guides"
     };
     function escapeRegExp(value) {
       return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
