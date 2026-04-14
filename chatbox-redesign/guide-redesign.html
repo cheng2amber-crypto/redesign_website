@@ -354,32 +354,49 @@
         <section class="group" data-group="quick">
           <button class="group-head" type="button"><span class="group-arrow">▾</span><span>快速入门</span></button>
           <div class="group-items">
-            <button class="item-btn" data-topic="start">开始使用</button>
-            <button class="item-btn" data-topic="chatbox-guide">Chatbox Guide</button>
-            <button class="item-btn" data-topic="concepts">核心概念</button>
-            <button class="item-btn" data-topic="shortcuts">键盘快捷键</button>
+            <button class="item-btn" data-topic="guide-home">快速入门</button>
+            <button class="item-btn" data-topic="download">下载安装</button>
+            <button class="item-btn" data-topic="first-chat">第一次对话</button>
+            <button class="item-btn" data-topic="choose-provider">选择服务方式</button>
+          </div>
+        </section>
+        <section class="group" data-group="concepts">
+          <button class="group-head" type="button"><span class="group-arrow">▾</span><span>核心概念</span></button>
+          <div class="group-items">
+            <button class="item-btn" data-topic="providers">模型和模型提供方</button>
+            <button class="item-btn" data-topic="models">模型与能力</button>
+            <button class="item-btn" data-topic="token">Token 与计算点数</button>
+            <button class="item-btn" data-topic="context">上下文与对话历史</button>
           </div>
         </section>
         <section class="group" data-group="service">
           <button class="group-head" type="button"><span class="group-arrow">▾</span><span>Chatbox AI 服务</span></button>
           <div class="group-items">
             <button class="item-btn" data-topic="pricing">套餐与价格</button>
+            <button class="item-btn" data-topic="quota">配额与用量</button>
             <button class="item-btn" data-topic="license">许可证管理</button>
-            <button class="item-btn" data-topic="how-license">如何使用您的许可证</button>
+            <button class="item-btn" data-topic="billing">账单与订阅</button>
           </div>
         </section>
         <section class="group" data-group="api">
           <button class="group-head" type="button"><span class="group-arrow">▾</span><span>API 与模型</span></button>
           <div class="group-items">
             <button class="item-btn" data-topic="api-key">自带 API Key</button>
-            <button class="item-btn" data-topic="token">Token计算方法</button>
+            <button class="item-btn" data-topic="claude">Claude</button>
+            <button class="item-btn" data-topic="gemini">Gemini</button>
+            <button class="item-btn" data-topic="ollama">Ollama</button>
+            <button class="item-btn" data-topic="lm-studio">LM Studio</button>
+            <button class="item-btn" data-topic="openrouter">OpenRouter</button>
           </div>
         </section>
         <section class="group" data-group="faq">
           <button class="group-head" type="button"><span class="group-arrow">▾</span><span>常见问题</span></button>
           <div class="group-items">
-            <button class="item-btn" data-topic="service-faq">服务常见问题</button>
             <button class="item-btn" data-topic="errors">常见错误及解决</button>
+            <button class="item-btn" data-topic="data-storage">数据存储</button>
+            <button class="item-btn" data-topic="troubleshooting">故障排除</button>
+            <button class="item-btn" data-topic="model-identity">模型身份识别</button>
+            <button class="item-btn" data-topic="macos-app-damaged">macOS 提示应用已损坏</button>
           </div>
         </section>
       </aside>
@@ -445,59 +462,143 @@
 
   <script>
     const docs = {
-      "start": {
-        title: "开始使用",
-        intro: "从安装到第一轮对话，5 分钟就能完成上手。建议先用标准模型跑通完整流程。",
+      "guide-home": {
+        title: "快速入门",
+        intro: "欢迎使用 Chatbox。本指南按快速入门、核心概念、Chatbox AI 服务、自带 API Key 和常见问题整理，方便你按任务快速定位信息。",
+        subTitle: "在本节中",
+        points: ["下载安装", "第一次对话", "选择服务方式", "模型和模型提供方", "套餐与定价", "License 管理"]
+      },
+      "download": {
+        title: "下载安装",
+        intro: "你可以根据设备平台下载适合的客户端版本，包括 Windows、macOS、Linux、iOS 与 Android。",
+        subTitle: "推荐动作",
+        points: ["先确认你的设备平台", "下载匹配的安装包", "安装后登录账号并检查版本"]
+      },
+      "first-chat": {
+        title: "第一次对话",
+        intro: "安装完成后，创建新会话并发送第一条消息，就能快速熟悉模型响应与工具入口。",
         subTitle: "推荐流程",
-        points: ["下载安装并登录账号", "创建新会话并发送首个问题", "根据任务切换合适模型与工具"]
+        points: ["创建新会话", "发送第一个问题", "根据结果切换模型或继续追问"]
       },
-      "chatbox-guide": {
-        title: "Chatbox Guide",
-        intro: "本指南汇总了安装、套餐、许可证、API Key 与常见问题，帮助你快速定位需要的信息。",
-        subTitle: "你将看到",
-        points: ["核心概念与能力边界", "不同场景的套餐选择建议", "故障排查与高频问答入口"]
+      "choose-provider": {
+        title: "选择服务方式",
+        intro: "你可以使用 Chatbox AI 服务，也可以接入自己的 API Key。两者在计费方式、模型来源和配置步骤上有所区别。",
+        subTitle: "判断依据",
+        points: ["想直接使用就选 Chatbox AI 服务", "想独立按模型账号计费可使用 API Key", "建议先选一种方式跑通完整流程"]
       },
-      "concepts": {
-        title: "核心概念",
-        intro: "理解模型、上下文、Token 与计算点数的关系，可以更稳定地控制质量、速度和成本。",
-        subTitle: "关键概念",
-        points: ["模型能力与使用成本并非线性关系", "上下文越长，推理成本通常越高", "按任务拆分对话可提升可控性"]
+      "providers": {
+        title: "模型和模型提供方",
+        intro: "模型提供方决定你接入的是哪一类服务与能力边界。理解提供方与模型关系，能更清楚地做能力和成本选择。",
+        subTitle: "关键理解",
+        points: ["提供方负责提供模型接入与计费", "同一提供方下可包含多个模型", "不同提供方在可用模型和定价上会有差异"]
       },
-      "shortcuts": {
-        title: "键盘快捷键",
-        intro: "快捷键可以提升操作效率，适合高频办公、学习与开发任务。",
-        subTitle: "常用快捷键",
-        points: ["新建会话：快速进入新任务", "发送与换行：区分消息提交和编辑", "全局搜索：快速定位历史对话"]
+      "models": {
+        title: "模型与能力",
+        intro: "不同模型在推理、代码、图像理解、多模态和速度上各有侧重，适合的任务类型也不同。",
+        subTitle: "选型建议",
+        points: ["复杂分析优先更强模型", "高频轻任务优先更快模型", "按任务场景固定常用模型可提升稳定性"]
+      },
+      "token": {
+        title: "Token 与计算点数",
+        intro: "计算点数受模型单价、输入长度、输出长度和上下文窗口共同影响，长会话通常会有更高消耗。",
+        subTitle: "优化建议",
+        points: ["高复杂任务优先固定模型", "减少无效上下文长度", "阶段性总结会话，减少重复消耗"]
+      },
+      "context": {
+        title: "上下文与对话历史",
+        intro: "上下文越长，模型可参考的信息越多，但推理成本和干扰风险也会随之增加。",
+        subTitle: "使用建议",
+        points: ["长任务分阶段总结", "清理无关上下文", "把关键结论显式写入新会话"]
       },
       "pricing": {
-        title: "套餐与价格",
+        title: "套餐与定价",
         intro: "根据使用强度选择免费版、Lite、Pro 或 Pro+，并在价格页查看完整能力差异与配额。",
         subTitle: "选择建议",
         points: ["先体验核心能力：免费版", "日常办公与学习：Lite", "高频专业任务：Pro / Pro+"]
       },
+      "quota": {
+        title: "配额与用量",
+        intro: "配额与用量页帮助你查看当前套餐的额度消耗情况，并判断是否需要升级或购买扩展。",
+        subTitle: "重点查看",
+        points: ["当前剩余额度", "本周期消耗速度", "是否需要扩展额度或升级套餐"]
+      },
       "license": {
-        title: "许可证管理",
+        title: "License 管理",
         intro: "你可以查看许可证状态、剩余额度与历史记录，并按需续费、升级或购买扩展额度。",
         subTitle: "管理项",
         points: ["查看许可证状态与到期时间", "查看额度消耗与剩余额度", "续费、升级与扩展额度管理"]
       },
-      "how-license": {
-        title: "如何使用您的许可证",
-        intro: "激活许可证后，系统会自动同步套餐能力和额度。你可在价格页与账户页查看当前状态。",
-        subTitle: "操作步骤",
-        points: ["输入或绑定有效许可证", "确认套餐能力与额度已生效", "在许可证列表中核对历史记录"]
+      "billing": {
+        title: "账单与订阅",
+        intro: "账单与订阅页集中展示支付状态、续费情况、订阅周期与历史消费记录。",
+        subTitle: "建议核对",
+        points: ["当前订阅是否生效", "账单金额与扣费周期", "支付方式与历史订单记录"]
       },
       "api-key": {
-        title: "自带 API Key",
-        intro: "你可以接入自己的 OpenAI、Claude、Gemini 等 API Key，按对应模型账号独立计费。",
+        title: "OpenAI",
+        intro: "你可以接入自己的 OpenAI API Key，按对应模型账号独立计费，并在模型设置中进行选择。",
         subTitle: "配置要点",
         points: ["确认 Key 权限和模型可用性", "检查配额与地区限制", "建议设置主用与备用模型"]
       },
-      "token": {
-        title: "Token计算方法",
-        intro: "计算点数受模型单价、输入长度、输出长度和上下文窗口共同影响，长会话消耗会更高。",
-        subTitle: "优化建议",
-        points: ["高复杂任务优先固定模型", "减少无效上下文长度", "阶段性总结会话，减少重复消耗"]
+      "claude": {
+        title: "Claude",
+        intro: "接入 Claude API Key 后，你可以在 Chatbox 中调用 Claude 系列模型完成写作、分析与代码任务。",
+        subTitle: "配置要点",
+        points: ["确认 Claude Key 可用", "检查模型列表与地区限制", "优先配置稳定常用模型"]
+      },
+      "gemini": {
+        title: "Gemini",
+        intro: "Gemini API Key 适合多模态理解与图像相关任务，接入后可在模型配置中独立选择使用。",
+        subTitle: "配置要点",
+        points: ["确认 Gemini Key 和项目配置", "检查模型可用性", "根据任务选择合适版本"]
+      },
+      "ollama": {
+        title: "Ollama",
+        intro: "Ollama 适合本地模型部署。接入后可以在本机或局域网环境中调用本地模型完成对话任务。",
+        subTitle: "配置要点",
+        points: ["确认本地服务正常运行", "检查模型是否已拉取", "确保访问地址与端口配置正确"]
+      },
+      "lm-studio": {
+        title: "LM Studio",
+        intro: "LM Studio 可作为本地模型提供方，适合在桌面环境中快速测试和管理本地模型。",
+        subTitle: "配置要点",
+        points: ["开启本地服务接口", "确认模型已加载", "在 Chatbox 中填写正确的访问地址"]
+      },
+      "openrouter": {
+        title: "OpenRouter",
+        intro: "OpenRouter 聚合多家模型提供方，适合统一管理多个模型接口与计费入口。",
+        subTitle: "配置要点",
+        points: ["确认 OpenRouter Key", "检查目标模型是否可用", "留意不同模型的上下文和计费差异"]
+      },
+      "errors": {
+        title: "错误解决",
+        intro: "常见问题通常来自网络、权限、配额或版本差异。建议按错误码与日志顺序排查。",
+        subTitle: "排查顺序",
+        points: ["先看错误提示与错误码", "检查网络、账号与权限", "确认版本和模型配额是否正常"]
+      },
+      "data-storage": {
+        title: "数据存储",
+        intro: "数据存储说明帮助你理解对话、配置与本地文件的保存方式，以及哪些数据会被同步或上传。",
+        subTitle: "重点关注",
+        points: ["本地数据保存位置", "同步与上传边界", "隐私和删除策略"]
+      },
+      "troubleshooting": {
+        title: "故障排除",
+        intro: "当你遇到异常闪退、登录失败、模型不可用或版本异常时，可以按故障排除流程逐步定位问题。",
+        subTitle: "建议流程",
+        points: ["确认当前版本", "检查网络与系统权限", "根据错误现象逐项排除"]
+      },
+      "model-identity": {
+        title: "模型身份识别",
+        intro: "模型身份识别用于确认当前调用的模型来源、名称和能力边界，避免误用或混淆。",
+        subTitle: "建议检查",
+        points: ["当前模型名称", "对应提供方", "模型能力与上下文上限"]
+      },
+      "macos-app-damaged": {
+        title: "macOS 提示应用已损坏",
+        intro: "如果 macOS 提示应用已损坏，通常与系统安全策略、下载来源或隔离属性有关。",
+        subTitle: "解决步骤",
+        points: ["确认安装包来源", "移除隔离属性后重新打开", "检查系统安全与隐私设置"]
       },
       "service-faq": {
         title: "服务常见问题",
@@ -505,18 +606,26 @@
         subTitle: "建议排查顺序",
         points: ["先确认账号登录状态", "再确认套餐与额度是否生效", "最后核对版本与网络环境"]
       },
-      "errors": {
-        title: "常见错误及解决",
-        intro: "常见问题通常来自网络、权限、配额或版本差异。建议按错误码与日志顺序排查。",
-        subTitle: "排查顺序",
-        points: ["先看错误提示与错误码", "检查网络、账号与权限", "确认版本和模型配额是否正常"]
+      "how-license": {
+        title: "如何使用您的许可证",
+        intro: "激活许可证后，系统会自动同步套餐能力和额度。你可在价格页与账户页查看当前状态。",
+        subTitle: "操作步骤",
+        points: ["输入或绑定有效许可证", "确认套餐能力与额度已生效", "在许可证列表中核对历史记录"]
+      },
+      "shortcuts": {
+        title: "键盘快捷键",
+        intro: "快捷键可以提升操作效率，适合高频办公、学习与开发任务。",
+        subTitle: "常用快捷键",
+        points: ["新建会话：快速进入新任务", "发送与换行：区分消息提交和编辑", "全局搜索：快速定位历史对话"]
+      },
+      "start": {
+        title: "开始使用",
+        intro: "从安装到第一轮对话，5 分钟就能完成上手。建议先用标准模型跑通完整流程。",
+        subTitle: "推荐流程",
+        points: ["下载安装并登录账号", "创建新会话并发送首个问题", "根据任务切换合适模型与工具"]
       }
     };
-    docs.download = docs.start;
-    docs["first-chat"] = docs.start;
-    docs.ui = docs["chatbox-guide"];
-    docs.providers = docs["chatbox-guide"];
-    docs.payment = docs["service-faq"];
+    docs.start = docs.download;
 
     const titleEl = document.getElementById("docTitle");
     const introEl = document.getElementById("docIntro");
@@ -527,17 +636,33 @@
     const groups = Array.from(document.querySelectorAll(".group"));
     const groupHeads = Array.from(document.querySelectorAll(".group-head"));
     const topicToGroup = {
+      "guide-home": "quick",
       start: "quick",
-      "chatbox-guide": "quick",
-      concepts: "quick",
-      shortcuts: "quick",
+      download: "quick",
+      "first-chat": "quick",
+      "choose-provider": "quick",
+      providers: "concepts",
+      models: "concepts",
+      token: "concepts",
+      context: "concepts",
       pricing: "service",
+      quota: "service",
       license: "service",
+      billing: "service",
       "how-license": "service",
       "api-key": "api",
-      token: "api",
+      claude: "api",
+      gemini: "api",
+      ollama: "api",
+      "lm-studio": "api",
+      openrouter: "api",
       "service-faq": "faq",
-      errors: "faq"
+      errors: "faq",
+      "data-storage": "faq",
+      troubleshooting: "faq",
+      "model-identity": "faq",
+      "macos-app-damaged": "faq",
+      shortcuts: "faq"
     };
     function escapeRegExp(value) {
       return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");

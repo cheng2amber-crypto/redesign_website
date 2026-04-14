@@ -565,21 +565,21 @@
     <section class="updates">
       <h2>更新日志</h2>
       <div class="updates-panel">
-        <a class="update-card" href="https://chatboxai.app/zh/help-center/changelog" target="_blank" rel="noreferrer">
+        <a class="update-card" href="./changelog.html#v1-19-1-2026-02-27">
           <img src="./assets/ref/nano2.png" alt="Nano Banana 2 更新" />
           <p>图片生成工具支持 Nano Banana 2</p>
         </a>
-        <a class="update-card" href="https://chatboxai.app/zh/help-center/changelog" target="_blank" rel="noreferrer">
+        <a class="update-card" href="./changelog.html#v1-16-1-2025-09-17">
           <img src="./assets/ref/update-gemini-2.5-flash-image.png" alt="Gemini 2.5 Flash Image 更新" />
           <p>支持Gemini-2.5-flash-image模型生图</p>
         </a>
-        <a class="update-card" href="https://chatboxai.app/zh/help-center/changelog" target="_blank" rel="noreferrer">
+        <a class="update-card" href="./changelog.html#v1-17-0-2025-10-27">
           <img src="./assets/ref/update-gemini-claude-api.png" alt="Gemini 与 Claude 更新" />
           <p>自定义提供方增加Gemini和Claude风格的API</p>
         </a>
       </div>
       <div class="view-all-wrap">
-        <a class="view-all" href="https://chatboxai.app/zh/help-center/changelog" target="_blank" rel="noreferrer"><span>查看全部</span><span>→</span></a>
+        <a class="view-all" href="./changelog.html"><span>查看全部</span><span>→</span></a>
       </div>
     </section>
 
@@ -687,15 +687,31 @@
     const searchInput = document.getElementById("searchInput");
     const searchBtn = document.getElementById("searchBtn");
     const topicSearchMap = [
-      { topic: "start", terms: ["开始使用", "下载安装", "下载", "第一次对话"] },
-      { topic: "concepts", terms: ["核心概念", "provider", "提供方"] },
-      { topic: "pricing", terms: ["套餐与价格", "套餐", "价格", "定价"] },
-      { topic: "api-key", terms: ["自带 api key", "api key", "openai", "api"] },
-      { topic: "errors", terms: ["常见错误及解决", "错误", "报错", "解决"] },
-      { topic: "license", terms: ["许可证管理", "许可证", "license"] },
-      { topic: "token", terms: ["token计算方法", "token", "tokens", "计算点数"] },
-      { topic: "service-faq", terms: ["常见服务问题", "服务常见问题", "服务问题"] },
-      { topic: "how-license", terms: ["如何使用您的许可证", "使用许可证"] },
+      { topic: "guide-home", terms: ["chatbox guide", "帮助中心", "用户指南", "指南首页", "今天我能为你提供什么帮助？"] },
+      { topic: "download", terms: ["下载安装", "下载", "下载安装", "getting started download"] },
+      { topic: "first-chat", terms: ["第一次对话", "first chat"] },
+      { topic: "choose-provider", terms: ["选择服务方式", "choose provider"] },
+      { topic: "providers", terms: ["模型和模型提供方", "提供方", "what is provider"] },
+      { topic: "models", terms: ["模型与能力", "models"] },
+      { topic: "token", terms: ["token 与计算点数", "token计算方法", "token 计算方法", "token 计算方式", "tokens"] },
+      { topic: "context", terms: ["上下文与对话历史", "上下文", "context"] },
+      { topic: "pricing", terms: ["套餐与定价", "套餐与价格", "价格", "定价", "plans"] },
+      { topic: "quota", terms: ["配额与用量", "quota"] },
+      { topic: "license", terms: ["license 管理", "许可证管理", "license", "如何使用您的许可证"] },
+      { topic: "billing", terms: ["账单与订阅", "billing"] },
+      { topic: "api-key", terms: ["自带 api key", "api key", "openai"] },
+      { topic: "claude", terms: ["claude"] },
+      { topic: "gemini", terms: ["gemini"] },
+      { topic: "ollama", terms: ["ollama"] },
+      { topic: "lm-studio", terms: ["lm studio"] },
+      { topic: "openrouter", terms: ["openrouter"] },
+      { topic: "errors", terms: ["常见错误及解决", "错误解决", "errors"] },
+      { topic: "data-storage", terms: ["数据存储", "data storage"] },
+      { topic: "troubleshooting", terms: ["故障排除", "troubleshooting"] },
+      { topic: "model-identity", terms: ["模型身份识别", "model identity"] },
+      { topic: "macos-app-damaged", terms: ["macos 提示应用已损坏", "应用已损坏", "macos app damaged"] },
+      { topic: "service-faq", terms: ["常见服务问题", "服务常见问题"] },
+      { topic: "how-license", terms: ["使用许可证", "如何使用许可证"] },
       { topic: "shortcuts", terms: ["键盘快捷键", "快捷键"] }
     ];
     function runSearch() {
