@@ -1,0 +1,1067 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chatbox AI 官网改版稿</title>
+  <style>
+    :root {
+      --brand: #e8956a;
+      --gold: #eec174;
+      --cta-dark: #2f3540;
+      --brown-deep: #5a4a41;
+      --brand-ink: #1f2937;
+      --bg: #ffffff;
+      --card: #ffffff;
+      --text: #111827;
+      --muted: #6b7280;
+      --line: #e5e7eb;
+      --ok: #0f766e;
+      --apple-font: "SF Pro Display", "SF Pro Text", -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", "Helvetica Neue", Arial, sans-serif;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: var(--apple-font);
+      color: var(--text);
+      background: #fff;
+    }
+    a { color: inherit; text-decoration: none; }
+    .container { width: min(1240px, calc(100% - 20px)); margin: 0 auto; }
+    .top {
+      position: sticky; top: 0; z-index: 30;
+      backdrop-filter: none;
+      background: #fff;
+      border-bottom: 1px solid var(--line);
+      transition: transform .25s ease;
+    }
+    .top.hidden { transform: translateY(-100%); }
+    .top-inner {
+      height: 72px; display: flex; align-items: center; justify-content: space-between;
+      gap: 16px;
+    }
+    .brand {
+      display: inline-flex; align-items: center; gap: 10px; font-weight: 700;
+      color: inherit; text-decoration: none;
+    }
+    .logo-img {
+      width: 34px; height: 34px; border-radius: 8px; border: 1px solid #f2f2f2;
+      object-fit: cover; background: #fff;
+    }
+    .nav { display: flex; align-items: center; gap: 16px; color: var(--brand-ink); }
+    .nav a, .nav .nav-link {
+      font-size: 14px; font-weight: 600; color: inherit; text-decoration: none;
+    }
+    .nav a:hover, .nav .nav-link:hover { color: var(--gold); }
+    .nav .nav-link {
+      border: 0; background: transparent; padding: 0; cursor: pointer;
+      display: inline-flex; align-items: center; gap: 6px; font-family: inherit;
+    }
+    .download-panel {
+      display: none;
+      border-top: 0;
+      background: #fff;
+      backdrop-filter: blur(12px);
+      border-bottom-left-radius: 36px;
+      border-bottom-right-radius: 36px;
+      box-shadow: 0 14px 26px rgba(17, 24, 39, .10);
+      overflow: hidden;
+    }
+    .download-panel.open { display: block; }
+    .download-panel-inner {
+      display: flex; align-items: center; gap: 10px; min-height: auto;
+      flex-wrap: wrap; padding: 16px 0 22px;
+    }
+    .download-link {
+      width: 96px; border-radius: 12px; border: 0; background: transparent;
+      padding: 8px 6px; text-align: center; font-size: 11.5px; color: #1f2937;
+      display: inline-flex; flex-direction: column; align-items: center; gap: 6px; font-weight: 600;
+      line-height: 1.2;
+    }
+    .download-link img {
+      width: 26px; height: 26px; object-fit: contain; filter: grayscale(1);
+    }
+    .download-link .windows-logo {
+      width: 26px; height: 26px; display: block; fill: #000;
+    }
+    .download-link .apple-logo {
+      width: 26px; height: 26px; display: block; fill: #000;
+    }
+    .download-link:hover { border-color: #d1d5db; }
+    .chip {
+      border: 1px solid var(--line); background: #fff; border-radius: 10px;
+      padding: 9px 12px; font-size: 13px; cursor: pointer;
+    }
+    .login-btn {
+      background: var(--cta-dark); color: #fff; border: 0; border-radius: 10px;
+      padding: 9px 14px; font-weight: 700; cursor: pointer;
+    }
+    .top.download-open { border-bottom-color: transparent; }
+    .login-btn:hover { background: #1f242c; }
+
+    .hero { padding: 58px 0 34px; background: transparent; }
+    .hero-grid { display: grid; grid-template-columns: 1.1fr .9fr; gap: 24px; align-items: center; }
+    .hero h1 { margin: 0 0 14px; font-size: clamp(28px, 4.2vw, 52px); line-height: 1.15; }
+    .hero h1 b { color: var(--brand); }
+    .hero p { margin: 0 0 22px; color: var(--muted); line-height: 1.7; }
+    .cta-row { display: flex; gap: 10px; flex-wrap: wrap; }
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center;
+      border-radius: 12px; border: 1px solid var(--line); padding: 11px 16px;
+      font-weight: 700; cursor: pointer; font-size: 14px;
+    }
+    .btn.primary { border: 0; background: var(--cta-dark); color: #fff; }
+    .btn.primary:hover { background: #1f242c; }
+    .visual {
+      background: transparent; border: 0; border-radius: 18px; padding: 16px;
+      box-shadow: none;
+    }
+    .visual .headline {
+      font-size: 13px; color: var(--muted); margin-bottom: 8px;
+    }
+    .hero-badges { display: none; }
+    .hero-shot {
+      position: relative; border: 1px solid var(--line); border-radius: 14px; padding: 8px; background: #fff;
+    }
+    .hero-shot img {
+      display: block; width: 100%; border-radius: 10px;
+    }
+    .phone-shot {
+      position: absolute; width: 32%; right: -8px; bottom: -18px; border: 6px solid #111827;
+      border-radius: 18px; background: #111827; box-shadow: 0 18px 26px rgba(17, 24, 39, .2);
+    }
+    .social-proof { display: none; }
+
+    section { padding: 56px 0; }
+    .section-title {
+      margin: 0 0 8px; font-size: clamp(19px, 2.2vw, 26px);
+      letter-spacing: -.01em; font-weight: 620; color: #4b5563;
+    }
+    .section-desc { margin: 0 0 16px; color: var(--muted); }
+    .marketing-row {
+      display: flex; gap: 8px; flex-wrap: wrap; margin: 6px 0 14px;
+    }
+    .marketing-chip {
+      display: inline-flex; align-items: center;
+      border: 1px solid #f3d2bf; background: #fff4ec; color: #9a3412;
+      border-radius: 999px; padding: 6px 10px; font-size: 12px; font-weight: 700;
+    }
+    .card {
+      background: var(--card); border: 1px solid var(--line); border-radius: 16px;
+      padding: 16px;
+    }
+
+    .models-wrap { position: relative; overflow: hidden; padding: 0 30px; }
+    .models-track { display: flex; gap: 16px; transition: transform .35s ease; }
+    .model {
+      min-width: 154px;
+      border: 1px solid #d9dde4;
+      border-radius: 34px;
+      padding: 14px 6px;
+      background: transparent;
+    }
+    .model .m-head {
+      display: flex; flex-direction: column; gap: 6px; align-items: center; justify-content: center;
+      margin-bottom: 0;
+    }
+    .model .m-logo {
+      width: 75px; height: 75px; border-radius: 16px; border: 0;
+      object-fit: contain; background: transparent; padding: 0;
+      transition: transform .22s ease;
+    }
+    .model:hover .m-logo { transform: rotate(10deg); }
+    .model .m-title {
+      font-weight: 400; font-size: 14px; line-height: 1.15; text-align: center;
+      letter-spacing: -.01em; margin-bottom: 0;
+    }
+    .model .m-sub { display: none; }
+    .models-ctrl { display: contents; }
+    .ctrl {
+      width: 30px; height: 30px; border-radius: 10px; border: 1px solid var(--line);
+      background: transparent; color: #9ca3af; cursor: pointer; font-weight: 700; position: absolute; top: 50%;
+      transform: translateY(-50%); z-index: 2;
+    }
+    #modelPrev { left: 0; }
+    #modelNext { right: 0; }
+
+    .feature-grid {
+      display: grid; gap: 12px; grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+    .feature {
+      overflow: hidden;
+      border: 0;
+      background: var(--cta-dark);
+      text-align: center;
+      transition: transform .2s ease, box-shadow .2s ease;
+    }
+    .feature:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 26px rgba(17,24,39,.08);
+    }
+    .feature-media {
+      margin: -16px -16px 12px;
+      height: 132px;
+      background: transparent;
+      border-bottom: 0;
+      border-radius: 12px 12px 0 0;
+      padding: 0;
+    }
+    .feature-media img, .feature-media video {
+      width: 100%; height: 100%; object-fit: cover; display: block;
+    }
+    .feature h3 {
+      margin: 0 0 6px;
+      font-size: 17px;
+      font-weight: 400;
+      color: #f5ecdf;
+      text-align: center;
+    }
+    .feature p { margin: 0; color: var(--muted); font-size: 14px; line-height: 1.55; }
+    .feature-keywords {
+      display: flex; gap: 6px; flex-wrap: wrap; margin-top: 10px;
+    }
+    #core .feature-keywords { display: none; }
+    .feature-keywords span {
+      display: inline-flex; align-items: center; border-radius: 999px;
+      border: 1px solid #d8dbe1; color: #374151; background: #fff;
+      padding: 4px 8px; font-size: 12px; font-weight: 600;
+    }
+
+    .copilot {
+      margin-top: 16px;
+      border: 0;
+      background: transparent;
+      padding: 0;
+    }
+    .copilot-hero { margin-bottom: 12px; }
+    .expert-chip-row { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 8px; }
+    .expert-chip {
+      display: inline-flex; align-items: center; border-radius: 999px;
+      border: 1px solid #d1d5db; color: #4b5563; background: #f3f4f6;
+      padding: 6px 12px; font-size: 13px; font-weight: 700;
+    }
+    .copilot-grid {
+      display: grid; gap: 10px; grid-template-columns: repeat(3, minmax(0,1fr));
+    }
+    .copilot-item {
+      border: 0; border-radius: 12px; padding: 12px;
+      background: transparent;
+    }
+    .copilot-item img { display: none; }
+    .copilot-item strong { display: block; margin-bottom: 4px; }
+    .copilot-item span { color: var(--muted); font-size: 13px; }
+
+    .review-world {
+      border: 0;
+      border-radius: 18px;
+      background: transparent;
+      padding: 0;
+      display: grid;
+      grid-template-columns: .85fr 1.15fr;
+      gap: 18px;
+      align-items: center;
+      overflow: visible;
+    }
+    .review-metrics .review-title { text-align: left; margin: 0 0 10px; }
+    .review-metrics h3 {
+      margin: 0 0 16px; font-size: clamp(28px, 3.2vw, 44px); line-height: 1.1;
+    }
+    .metric-list { display: grid; gap: 10px; }
+    .metric-list .m { font-size: 30px; font-weight: 800; line-height: 1; }
+    .metric-list .s { color: var(--muted); font-size: 13px; }
+    .metric-copy {
+      display: grid; gap: 8px;
+    }
+    .metric-item {
+      border: 0; border-radius: 12px; background: transparent;
+      padding: 10px 0;
+    }
+    .metric-item .num {
+      display: block; font-size: 32px; font-weight: 820; line-height: 1; letter-spacing: -.02em;
+      color: #111827; margin-bottom: 4px;
+    }
+    .metric-item .label {
+      display: block; font-size: 12px; color: #6b7280; line-height: 1.2;
+    }
+    .github-label { display: inline-flex; align-items: center; gap: 6px; }
+    .github-mark { width: 14px; height: 14px; object-fit: contain; filter: grayscale(1) contrast(1.1); }
+    .map-wrap {
+      position: relative; min-height: 620px; border: 0;
+      border-radius: 14px; background: transparent; overflow: hidden;
+    }
+    .world-map {
+      position: absolute; inset: 12px;
+      border-radius: 12px;
+      background: transparent;
+      border: 0;
+      display: flex; align-items: center; justify-content: center; overflow: hidden;
+    }
+    .world-map img {
+      width: 100%; height: 100%; object-fit: contain;
+      transform: rotate(var(--globe-rotate, 0deg)) scale(1);
+      transform-origin: center center;
+      transition: transform .1s linear;
+      mix-blend-mode: multiply;
+      pointer-events: none;
+      user-select: none;
+      -webkit-user-drag: none;
+    }
+    .review-card {
+      position: absolute; width: 206px; background: rgba(255,255,255,.96); border: 1px solid #ececec;
+      border-radius: 12px; padding: 10px; box-shadow: 0 10px 20px rgba(17,24,39,.07);
+      animation: floatY 5s ease-in-out infinite;
+      opacity: 0; transform: translateY(12px) scale(.72); transition: opacity .8s ease, transform .8s ease;
+      pointer-events: none;
+    }
+    .review-card.slot-left {
+      left: 4% !important;
+      top: 40% !important;
+      z-index: 3;
+    }
+    .review-card.slot-right-top {
+      left: 56% !important;
+      top: 14% !important;
+      z-index: 4;
+    }
+    .review-card.slot-right-bottom {
+      left: 62% !important;
+      top: 62% !important;
+      z-index: 2;
+    }
+    .review-card.active { opacity: 1; transform: translateY(0) scale(1); }
+    .review-card .u { font-size: 12px; font-weight: 700; margin-bottom: 4px; }
+    .review-card .d { font-size: 11px; color: var(--muted); margin-bottom: 6px; }
+    .review-card .t { font-size: 12px; line-height: 1.45; color: #374151; margin-bottom: 6px; }
+    .stars { color: #f59e0b; letter-spacing: 1px; font-size: 11px; }
+    .review-grid {
+      margin-top: 14px; display: grid; gap: 10px; grid-template-columns: repeat(3, minmax(0,1fr));
+    }
+    .mini-review {
+      border: 1px solid var(--line); border-radius: 10px; padding: 10px; background: #fff;
+      font-size: 12px; color: #374151; line-height: 1.5;
+    }
+    .mini-review .meta { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
+    .mini-review .avatar {
+      width: 22px; height: 22px; border-radius: 50%; background: #f3f4f6; color: #374151;
+      display: inline-flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 800;
+      border: 1px solid #e5e7eb;
+    }
+    .mini-review .name { font-weight: 700; color: #111827; font-size: 12px; }
+    .review-badges { display: none; }
+    @keyframes floatY {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+
+    .download-grid { display: grid; grid-template-columns: repeat(5, minmax(0,1fr)); gap: 10px; }
+    .download-item {
+      border: 1px solid var(--line); border-radius: 12px; padding: 12px;
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      background: #fff; color: #111827; filter: grayscale(1);
+    }
+    .download-item img { width: 16px; height: 16px; object-fit: contain; }
+    .download-item:hover { filter: grayscale(.2); border-color: #d1d5db; }
+
+    #download {
+      background: rgba(248, 249, 250, .78);
+      margin-left: calc(50% - 50vw);
+      margin-right: calc(50% - 50vw);
+      padding-left: calc(50vw - 50%);
+      padding-right: calc(50vw - 50%);
+    }
+    .download-visual {
+      margin-top: 14px; border: 0;
+      border-radius: 0; background: rgba(248, 249, 250, .78); padding: 14px;
+      display: grid; grid-template-columns: 1.1fr .9fr; gap: 14px; align-items: center;
+    }
+    .download-visual .device-shot {
+      position: relative; border: 1px solid #ececec; border-radius: 12px; background: #fff; padding: 8px;
+    }
+    .download-visual .device-shot img {
+      width: 100%; border-radius: 8px; display: block;
+    }
+    .download-visual .device-shot .mini-phone {
+      position: absolute; right: -8px; bottom: -14px;
+      width: 32%; border: 5px solid #111827; border-radius: 14px; background: #111827;
+      box-shadow: 0 12px 20px rgba(17,24,39,.18);
+    }
+    .download-visual .download-copy h3 {
+      margin: 0 0 6px; font-size: 22px;
+    }
+    #download .download-title {
+      margin: 0 0 10px;
+      font-size: clamp(30px, 3.6vw, 42px);
+      font-weight: 620;
+      color: #000;
+      text-align: left;
+      letter-spacing: -.01em;
+    }
+    .download-visual .download-copy p {
+      margin: 0 0 12px; color: var(--muted); line-height: 1.6;
+    }
+
+    .pricing { margin-top: 14px; display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 10px; }
+    .plan { position: relative; border: 1px solid var(--line); border-radius: 14px; padding: 14px; background: #fff; }
+    .discount {
+      position: absolute; right: 10px; top: 10px; font-size: 12px; font-weight: 800;
+      color: #fff; background: #ef4444; border-radius: 999px; padding: 4px 8px;
+    }
+    .plan h3 { margin: 0 0 8px; }
+    .price { font-size: 26px; font-weight: 800; margin: 0; }
+    .origin { color: var(--muted); text-decoration: line-through; font-size: 13px; }
+    .plan ul { margin: 10px 0 0; padding-left: 18px; color: #374151; }
+    .plan li { margin-bottom: 6px; font-size: 14px; }
+
+    .faq-item { border-top: 0; max-width: 760px; margin: 0 auto; }
+    .faq-q {
+      width: 100%; text-align: left; background: none; border: 0; cursor: pointer;
+      padding: 14px 14px 14px 32px; font-size: 19px; font-weight: 700; color: #111827;
+      position: relative; transition: color .2s ease;
+    }
+    .faq-q::after {
+      content: "+"; position: absolute; right: 8px; top: 50%; transform: translateY(-50%);
+      font-size: 22px; line-height: 1; font-weight: 500; color: #4b5563;
+    }
+    .faq-item.open .faq-q::after { content: "-"; }
+    .faq-q:hover {
+      color: transparent;
+      background-image: linear-gradient(180deg, #f8e0a0 0%, #d69a35 50%, #f4cf7d 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+    }
+    .faq-q:hover::after {
+      color: #d69a35;
+    }
+    .faq-a { display: none; color: var(--muted); padding: 0 32px 14px; line-height: 1.7; text-align: left; }
+    .faq-item.open .faq-a { display: block; }
+
+    .footer {
+      margin-top: 24px;
+      background: #1f2b40;
+      color: #c9d0dc;
+      border-top: 0;
+      padding: 30px 0 16px;
+      font-size: 14px;
+    }
+    .footer-shell {
+      width: min(1540px, calc(100% - 40px));
+      margin: 0 auto;
+    }
+    .footer-top {
+      display: grid;
+      grid-template-columns: 1.2fr 1.8fr;
+      gap: 24px;
+      align-items: start;
+      min-height: 270px;
+    }
+    .footer-brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 46px;
+      line-height: 1;
+      font-weight: 700;
+      color: #eef2f7;
+      margin-top: 2px;
+    }
+    .footer-brand .logo-img { width: 46px; height: 46px; border-radius: 10px; }
+    .footer-cols {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(130px, 1fr));
+      gap: 36px;
+      padding-top: 4px;
+    }
+    .footer-col h4 { margin: 0 0 14px; font-size: 20px; color: #eef2f7; font-weight: 700; }
+    .footer-col a { display: block; color: #b4bfce; margin: 0 0 14px; font-size: 16px; }
+    .footer-lang-row {
+      display: flex;
+      justify-content: center;
+      margin-top: 20px;
+      margin-bottom: 22px;
+    }
+    .footer-lang {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 20px;
+      border-radius: 12px;
+      background: #f3f4f6;
+      color: #1f2937;
+      font-weight: 700;
+      font-size: 38px;
+      line-height: 1;
+      border: 1px solid #e5e7eb;
+    }
+    .footer-divider {
+      border-top: 1px solid rgba(255,255,255,.12);
+    }
+    .footer-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 18px;
+      color: #96a3b8;
+      font-size: 35px;
+      line-height: 1.2;
+    }
+    .footer-icons { display: flex; gap: 22px; font-size: 44px; }
+
+    .toast {
+      position: fixed; right: 16px; bottom: 16px; z-index: 60; width: min(340px, calc(100% - 28px));
+      border: 1px solid var(--line); border-radius: 14px; background: #fff; padding: 14px; display: none;
+      box-shadow: 0 20px 36px rgba(17,24,39,.14);
+    }
+    .toast h4 { margin: 0 0 6px; font-size: 16px; }
+    .toast p { margin: 0 0 10px; color: var(--muted); font-size: 14px; line-height: 1.5; }
+    .toast .row { display: flex; gap: 8px; }
+
+    .modal-mask {
+      position: fixed; inset: 0; background: rgba(17,24,39,.48); display: none;
+      align-items: center; justify-content: center; z-index: 70; padding: 16px;
+    }
+    .modal {
+      width: min(460px, 100%); background: #fff; border-radius: 16px; border: 1px solid var(--line);
+      padding: 18px;
+    }
+    .modal h3 { margin: 0 0 8px; }
+    .modal p { color: var(--muted); margin: 0 0 12px; line-height: 1.6; }
+    .modal .row { display: flex; gap: 10px; }
+
+    @media (max-width: 900px) {
+      .hero-grid { grid-template-columns: 1fr; }
+      .feature-grid, .copilot-grid { grid-template-columns: repeat(2, minmax(0,1fr)); }
+      .download-grid, .pricing { grid-template-columns: repeat(2, minmax(0,1fr)); }
+      .download-visual { grid-template-columns: 1fr; }
+      .copilot-hero { grid-template-columns: 1fr; }
+      .review-world { grid-template-columns: 1fr; }
+      .map-wrap { min-height: 540px; }
+      .review-grid { grid-template-columns: repeat(2, minmax(0,1fr)); }
+      .review-card { width: 180px; }
+      .review-card.slot-left { left: 4% !important; top: 6% !important; }
+      .review-card.slot-right-top { left: 52% !important; top: 34% !important; }
+      .review-card.slot-right-bottom { left: 52% !important; top: 66% !important; }
+      .nav { display: none; }
+      .footer-top { grid-template-columns: 1fr; min-height: auto; }
+      .footer-cols { grid-template-columns: 1fr 1fr; }
+      .footer-brand { font-size: 34px; }
+      .footer-lang { font-size: 28px; }
+    }
+    @media (max-width: 620px) {
+      .feature-grid, .copilot-grid, .download-grid, .pricing { grid-template-columns: 1fr; }
+      .review-grid { grid-template-columns: 1fr; }
+      .footer-cols { grid-template-columns: 1fr; }
+      .footer-bottom { flex-direction: column; gap: 10px; align-items: flex-start; }
+      .footer-bottom { font-size: 22px; }
+      .footer-icons { font-size: 28px; }
+    }
+    #models { padding-top: 0; margin-top: -12px; }
+    #models .container { width: min(1380px, calc(100% - 2px)); }
+    #models .section-title {
+      font-size: clamp(12px, 1.2vw, 14px);
+      text-align: center;
+      margin-bottom: 10px;
+    }
+    #download .section-title,
+    #reviews .section-title {
+      text-align: center;
+      font-size: clamp(19px, 2.2vw, 26px);
+      letter-spacing: -.01em;
+      font-weight: 620;
+      color: #4b5563;
+    }
+    #core .section-title,
+    #faq .section-title {
+      text-align: center;
+      font-size: clamp(19px, 2.2vw, 26px);
+      letter-spacing: -.01em;
+      font-weight: 620;
+      color: #000;
+    }
+    #faq .container {
+      background: transparent;
+      border: 0;
+      padding: 0;
+      border-radius: 0;
+    }
+    #faq .section-title { margin-bottom: 12px; text-align: center; }
+    #reviews .review-metrics {
+      padding-left: 0;
+      min-height: 620px;
+      display: flex;
+      align-items: center;
+    }
+    #reviews .metric-copy { padding-left: clamp(220px, 18vw, 330px); }
+    .hero-copy { padding-left: clamp(80px, 10vw, 200px); }
+    #reviews .review-metrics .review-title {
+      text-align: left;
+      margin: 0 0 10px;
+      font-size: clamp(19px, 2.2vw, 26px);
+      font-weight: 620;
+      color: #000;
+      line-height: 1.15;
+    }
+    #reviews .metric-item:first-child .num {
+      font-size: clamp(19px, 2.2vw, 26px);
+      font-weight: 620;
+      color: #000;
+      margin-bottom: 6px;
+      line-height: 1.15;
+    }
+  </style>
+</head>
+<body>
+  <header class="top">
+    <div class="container top-inner">
+      <a class="brand" href="./index-redesign.html">
+        <img class="logo-img" src="https://chatboxai.app/icon.png" alt="Chatbox logo" />
+        <span>Chatbox AI</span>
+      </a>
+      <nav class="nav">
+        <a href="https://web.chatboxai.app" target="_blank" rel="noreferrer">开始对话</a>
+        <button class="nav-link" id="downloadTrigger" type="button" aria-expanded="false">下载 <span>▾</span></button>
+        <a href="./pricing.html">价格</a>
+        <a href="./help-center-redesign.html">用户指南</a>
+        <button class="login-btn" id="loginBtn">登录</button>
+        <button class="chip" id="langBtn">中文 / EN</button>
+      </nav>
+    </div>
+    <div class="download-panel" id="downloadPanel">
+      <div class="container download-panel-inner">
+        <a class="download-link" href="https://apps.apple.com/app/chatbox-ai/id6471368056" target="_blank" rel="noreferrer"><img src="https://chatboxai.app/app-store.png" alt="iOS" />iOS</a>
+        <a class="download-link" href="https://chatboxai.app/install?download=android_apk" target="_blank" rel="noreferrer"><img src="https://chatboxai.app/android.svg" alt="Android APK" />Android</a>
+        <a class="download-link" href="https://play.google.com/store/apps/details?id=xyz.chatboxapp.chatbox" target="_blank" rel="noreferrer"><img src="https://chatboxai.app/google_play.svg" alt="Google Play" />Google Play</a>
+        <a class="download-link" href="./download.html#desktop-windows64"><svg class="windows-logo" viewBox="0 0 88 88" aria-hidden="true"><path d="M4 12.5 39 7v34H4Zm40 27.7h40V0L44 5.8ZM4 47h35v34L4 76Zm40 34 40-5.6V47H44Z"/></svg>Windows 64位</a>
+        <a class="download-link" href="./download.html#desktop-macos-intel"><svg class="apple-logo" viewBox="0 0 384 512" aria-hidden="true"><path d="M318.7 268.7c-.2-37.5 16.6-65.8 50.8-86.8-19.1-27.2-47.9-42.1-86.2-45.3-36.1-3.1-75.6 20.9-90.1 20.9-15.3 0-50.2-19.9-77.7-19.9C59.2 138.2 0 184.2 0 278.6c0 28 5.1 57 15.3 87 13.6 39.8 62.7 137.3 114 135.7 26.8-.7 45.7-19 80.5-19 33.8 0 51.3 19 80.5 19 51.7-.8 96.1-89.5 109-129.4-73.9-34.8-80.6-102.7-80.6-103.2zM261.2 95.2c27.7-32.9 25.2-62.8 24.4-73.2-24.4 1.4-52.7 16.6-68.8 35.3-17.7 20.3-28.1 45.5-25.9 73.5 26.3 2 50.5-11.4 70.3-35.6z"/></svg>macOS Intel</a>
+        <a class="download-link" href="./download.html#desktop-macos-apple"><svg class="apple-logo" viewBox="0 0 384 512" aria-hidden="true"><path d="M318.7 268.7c-.2-37.5 16.6-65.8 50.8-86.8-19.1-27.2-47.9-42.1-86.2-45.3-36.1-3.1-75.6 20.9-90.1 20.9-15.3 0-50.2-19.9-77.7-19.9C59.2 138.2 0 184.2 0 278.6c0 28 5.1 57 15.3 87 13.6 39.8 62.7 137.3 114 135.7 26.8-.7 45.7-19 80.5-19 33.8 0 51.3 19 80.5 19 51.7-.8 96.1-89.5 109-129.4-73.9-34.8-80.6-102.7-80.6-103.2zM261.2 95.2c27.7-32.9 25.2-62.8 24.4-73.2-24.4 1.4-52.7 16.6-68.8 35.3-17.7 20.3-28.1 45.5-25.9 73.5 26.3 2 50.5-11.4 70.3-35.6z"/></svg>macOS Apple</a>
+        <a class="download-link" href="./download.html#desktop-linux-x64"><img src="https://chatboxai.app/linux.svg" alt="Linux 64-bit" />Linux 64位</a>
+        <a class="download-link" href="./download.html#desktop-linux-arm64"><img src="https://chatboxai.app/linux.svg" alt="Linux ARM64" />Linux ARM64</a>
+        <a class="download-link" href="./download.html#desktop-win7"><svg class="windows-logo" viewBox="0 0 88 88" aria-hidden="true"><path d="M4 12.5 39 7v34H4Zm40 27.7h40V0L44 5.8ZM4 47h35v34L4 76Zm40 34 40-5.6V47H44Z"/></svg>Windows 7</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <h1>办公学习的专业搭档</h1>
+          <p>Chatbox AI 是一款 AI 客户端应用和智能助手，支持众多先进 AI 模型和 API，可在 Windows、macOS、Android、iOS、Linux 和网页版使用。新版仅修改你提出的重点模块，其余信息按原官网结构尽量保留。</p>
+          <div class="cta-row">
+            <a class="btn primary" id="startTrialBtn" href="./download.html">免费下载 (for MacOS)</a>
+          </div>
+        </div>
+        <div class="visual">
+          <div class="headline">原官网视觉素材 + 改版交互</div>
+          <div class="hero-shot">
+            <img src="https://download.chatboxai.app/static/snapshot_desktop.jpeg" alt="Chatbox Desktop Snapshot" />
+            <img class="phone-shot" src="https://download.chatboxai.app/static/snapshot_phone.jpeg" alt="Chatbox Phone Snapshot" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="models">
+      <div class="container">
+        <h2 class="section-title">接入全球顶尖模型</h2>
+        <div class="models-wrap">
+          <div class="models-ctrl">
+            <button class="ctrl" id="modelPrev" aria-label="上一组">‹</button>
+            <button class="ctrl" id="modelNext" aria-label="下一组">›</button>
+          </div>
+          <div class="models-track" id="modelsTrack">
+            <article class="model"><div class="m-head"><img class="m-logo" src="./assets/models/gemini-3.1-pro.png" alt="Gemini 3.1 Pro" /><div class="m-title">Gemini 3.1 Pro</div></div><div class="m-sub">多模态理解与推理</div></article>
+            <article class="model"><div class="m-head"><img class="m-logo" src="./assets/models/claude-opus-4.6.png" alt="Claude-Opus-4.6" /><div class="m-title">Claude-Opus-4.6</div></div><div class="m-sub">复杂分析与长文能力</div></article>
+            <article class="model"><div class="m-head"><img class="m-logo" src="./assets/models/claude-sonnet-4.6.jpeg" alt="Claude-Sonnet-4.6" /><div class="m-title">Claude-Sonnet-4.6</div></div><div class="m-sub">通用任务稳定输出</div></article>
+            <article class="model"><div class="m-head"><img class="m-logo" src="./assets/models/claude-haiku-4.5.jpeg" alt="Claude-Haiku-4.5" /><div class="m-title">Claude-Haiku-4.5</div></div><div class="m-sub">轻量快速回答</div></article>
+            <article class="model"><div class="m-head"><img class="m-logo" src="./assets/models/glm-5.jpeg" alt="GLM-5" /><div class="m-title">GLM-5</div></div><div class="m-sub">中文语义理解</div></article>
+            <article class="model"><div class="m-head"><img class="m-logo" src="./assets/models/kimi-k2.5.jpeg" alt="Kimi-K2.5" /><div class="m-title">Kimi-K2.5</div></div><div class="m-sub">长上下文处理</div></article>
+            <article class="model"><div class="m-head"><img class="m-logo" src="./assets/models/nano-banana-2.png" alt="Nano-Banana-2" /><div class="m-title">Nano-Banana-2</div></div><div class="m-sub">轻量智能助手</div></article>
+            <article class="model"><div class="m-head"><img class="m-logo" src="./assets/models/gpt-5.4.png" alt="GPT-5.4" /><div class="m-title">GPT-5.4</div></div><div class="m-sub">复杂推理与生成</div></article>
+            <article class="model"><div class="m-head"><img class="m-logo" src="./assets/models/gpt-o4-mini.jpeg" alt="GPT-o4-mini" /><div class="m-title">GPT-o4-mini</div></div><div class="m-sub">高性价比快速响应</div></article>
+            <article class="model"><div class="m-head"><img class="m-logo" src="./assets/models/assistant.png" alt="Assistant" /><div class="m-title">Assistant</div></div><div class="m-sub">助理型对话任务</div></article>
+            <article class="model"><div class="m-head"><img class="m-logo" src="./assets/models/minimax-m2.7.jpeg" alt="Minimax-M2.7" /><div class="m-title">Minimax-M2.7</div></div><div class="m-sub">多语言内容生成</div></article>
+            <article class="model"><div class="m-head"><img class="m-logo" src="./assets/models/deepseek-v3.2.png" alt="DeepSeek-V3.2" /><div class="m-title">DeepSeek-V3.2</div></div><div class="m-sub">中文任务与稳定输出</div></article>
+            <article class="model"><div class="m-head"><img class="m-logo" src="./assets/models/qwen3.5-plus.jpeg" alt="Qwen3.5-Plus" /><div class="m-title">Qwen3.5-Plus</div></div><div class="m-sub">企业与工具调用</div></article>
+            <article class="model"><div class="m-head"><img class="m-logo" src="./assets/models/grok-4.png" alt="Grok-4" /><div class="m-title">Grok-4</div></div><div class="m-sub">实时信息与观点补充</div></article>
+            <article class="model"><div class="m-head"><img class="m-logo" src="./assets/models/gpt-image.jpeg" alt="GPT-Image" /><div class="m-title">GPT-Image</div></div><div class="m-sub">高质量图片生成</div></article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="core">
+      <div class="container">
+        <h2 class="section-title">让 AI 干活，你决策</h2>
+        <div class="feature-grid">
+          <article class="feature card">
+            <div class="feature-media"><img src="https://download.chatboxai.app/static/snapshot_file.gif" alt="与文档和图聊天" /></div>
+            <h3>多模态内容理解与智能交互</h3>
+            <div class="feature-keywords"><span>PDF</span><span>Office</span><span>图片理解</span></div>
+          </article>
+          <article class="feature card">
+            <div class="feature-media"><video src="https://download.chatboxai.app/static/snapshot_code.mp4" autoplay loop muted playsinline></video></div>
+            <h3>代码创作助手</h3>
+            <div class="feature-keywords"><span>生成</span><span>调试</span><span>预览</span></div>
+          </article>
+          <article class="feature card">
+            <div class="feature-media"><img src="./assets/ref/ref3.png" alt="实时联网搜索与查询" /></div>
+            <h3>实时联网 + 网页解读</h3>
+            <div class="feature-keywords"><span>联网搜索</span><span>实时查询</span><span>可信来源</span></div>
+          </article>
+          <article class="feature card">
+            <div class="feature-media"><img src="https://download.chatboxai.app/static/snapshot_chart.jpeg" alt="图表可视化见解" /></div>
+            <h3>数据秒变图表，导出即用</h3>
+            <div class="feature-keywords"><span>可视化</span><span>趋势分析</span><span>报告</span></div>
+          </article>
+          <article class="feature card">
+            <div class="feature-media"><img src="https://download.chatboxai.app/static/snapshot_image.jpeg" alt="AI 图像生成" /></div>
+            <h3>文字变图像，创意无边界</h3>
+            <div class="feature-keywords"><span>文生图</span><span>创意草图</span><span>营销素材</span></div>
+          </article>
+          <article class="feature card">
+            <div class="feature-media"><img src="https://download.chatboxai.app/static/snapshot_latex.jpeg" alt="LaTeX 和 Markdown 渲染" /></div>
+            <h3>公式与笔记专业排版</h3>
+            <div class="feature-keywords"><span>LaTeX</span><span>Markdown</span><span>公式排版</span></div>
+          </article>
+          <article class="feature card">
+            <div class="feature-media"><img src="./assets/ref/ref5.png" alt="设计即隐私" /></div>
+            <h3>设计即隐私 + 知识库</h3>
+            <div class="feature-keywords"><span>本地存储</span><span>隐私保护</span><span>数据可控</span></div>
+          </article>
+          <article class="feature card">
+            <div class="feature-media"><img src="./assets/docx2/figure2-experts.png" alt="MCP 扩展工具" /></div>
+            <h3>MCP 扩展工具</h3>
+            <div class="feature-keywords"><span>arXiv</span><span>Fetch</span><span>Sequential Thinking</span><span>Context7</span><span>EdgeOne Pages</span><span>私有系统接入</span></div>
+          </article>
+        </div>
+
+        <div class="copilot card">
+          <div class="copilot-hero">
+            <div>
+              <h3 style="margin:0 0 6px;">专业领域专家</h3>
+              <div class="expert-chip-row">
+                <span class="expert-chip">74+ 搭档覆盖办公、学习、开发、运营</span>
+                <span class="expert-chip">从问题到结果，少走弯路</span>
+              </div>
+            </div>
+          </div>
+          <div class="copilot-grid">
+            <div class="copilot-item"><img src="./assets/docx2/figure2-experts.png" alt="办公效率专家" /><strong>办公效率专家</strong><span>邮件、会议纪要、PPT 提纲、流程 SOP</span></div>
+            <div class="copilot-item"><img src="./assets/docx2/figure2-experts.png" alt="学习辅导专家" /><strong>学习辅导专家</strong><span>知识拆解、练习题、错题归因与复盘</span></div>
+            <div class="copilot-item"><img src="./assets/docx2/figure2-experts.png" alt="代码开发专家" /><strong>代码开发专家</strong><span>生成、调试、单测、性能优化</span></div>
+            <div class="copilot-item"><img src="./assets/docx2/figure2-experts.png" alt="数据分析专家" /><strong>数据分析专家</strong><span>清洗、可视化、结论提炼与汇报</span></div>
+            <div class="copilot-item"><img src="./assets/docx2/figure2-experts.png" alt="内容创作专家" /><strong>内容创作专家</strong><span>短文、长文、标题结构和润色</span></div>
+            <div class="copilot-item"><img src="./assets/docx2/figure2-experts.png" alt="行业场景专家" /><strong>行业场景专家</strong><span>电商、教育、客服、运营模板</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="download">
+      <div class="container">
+        <div class="download-visual">
+          <div class="device-shot">
+            <img src="https://download.chatboxai.app/static/snapshot_desktop.jpeg" alt="Desktop" />
+            <img class="mini-phone" src="https://download.chatboxai.app/static/snapshot_phone.jpeg" alt="Phone" />
+          </div>
+          <div class="download-copy">
+            <h2 class="download-title">多设备同步，随时接力</h2>
+            <p>支持 iOS、Android APK、Google Play、Windows。保持页面简洁，同时保留完整下载能力。</p>
+            <a class="btn primary" href="./download.html">快速下载</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="reviews">
+      <div class="container">
+        <div class="review-world">
+          <div class="review-metrics">
+            <div class="metric-copy">
+              <div class="metric-item"><span class="num">全球</span><span class="label">用户持续好评</span></div>
+              <div class="metric-item"><span class="num">39,000+</span><span class="label github-label">GitHub Stars <img class="github-mark" src="https://github.githubassets.com/favicons/favicon-dark.svg" alt="GitHub" /></span></div>
+              <div class="metric-item"><span class="num">4.8/5</span><span class="label">Featured on Product Hunt</span></div>
+              <div class="metric-item"><span class="num">254%</span><span class="label">用户增长率</span></div>
+            </div>
+          </div>
+          <div class="map-wrap">
+            <div class="world-map"><img src="./assets/docx2/figure1-globe-transparent.png" alt="图1地图" /></div>
+            <article class="review-card active" style="left:6%; top:26%;" data-country="美国" data-rotate="24">
+              <div class="u">Jason Cou</div><div class="d">美国 · Jan 9, 2025</div>
+              <div class="t">Valuable and energy-saving in personal and professional workflows.</div><div class="stars">⭐️⭐️⭐️⭐️⭐️</div>
+            </article>
+            <article class="review-card" style="left:40%; top:20%;" data-country="英国" data-rotate="82">
+              <div class="u">Richard M</div><div class="d">英国 · Jul 29, 2024</div>
+              <div class="t">Great app and easy to use. Daily usage is stable and productive.</div><div class="stars">⭐️⭐️⭐️⭐️⭐️</div>
+            </article>
+            <article class="review-card" style="left:58%; top:30%;" data-country="迪拜" data-rotate="134">
+              <div class="u">dalya</div><div class="d">迪拜 · Feb 17, 2025</div>
+              <div class="t">It is really good.</div><div class="stars">⭐️⭐️⭐️⭐️⭐️</div>
+            </article>
+            <article class="review-card" style="left:70%; top:66%;" data-country="澳大利亚" data-rotate="196">
+              <div class="u">Corey Naas</div><div class="d">澳大利亚 · Jul 3, 2024</div>
+              <div class="t">Chatbox changed the way I use language models.</div><div class="stars">⭐️⭐️⭐️⭐️⭐️</div>
+            </article>
+            <article class="review-card" style="left:66%; top:42%;" data-country="中国" data-rotate="254">
+              <div class="u">晓文</div><div class="d">中国 · Sep 11, 2024</div>
+              <div class="t">体验流畅，效率很高，工作学习切换非常顺手。</div><div class="stars">⭐️⭐️⭐️⭐️⭐️</div>
+            </article>
+            <article class="review-card" style="left:56%; top:58%;" data-country="中国" data-rotate="312">
+              <div class="u">小众软件</div><div class="d">中国 · Jul 2, 2024</div>
+              <div class="t">设置简单、上手快，长期使用稳定，效率提升明显。</div><div class="stars">⭐️⭐️⭐️⭐️⭐️</div>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="faq">
+      <div class="container">
+        <h2 class="section-title">常见问题</h2>
+        <div class="faq-item open">
+          <button class="faq-q">如何申请退款？</button>
+          <div class="faq-a">在帮助中心搜索“退款”，进入订单与支付分类，按步骤提交工单并附订单号。</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q">我能同时在多端使用吗？</button>
+          <div class="faq-a">可以，支持 Windows、macOS、Android、iOS 与 Web，多端统一账号。</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q">如何快速下载客户端？</button>
+          <div class="faq-a">点击顶部“下载”或首页“快速下载”按钮，即可进入独立下载页，选择对应平台下载安装。</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q">如何选择套餐？</button>
+          <div class="faq-a">轻度使用选 Lite；学习与办公主力选 Pro；重度专业场景选 Pro+。</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q">支持哪些主流模型？</button>
+          <div class="faq-a">支持 GPT、Claude、Gemini、DeepSeek 等主流模型，并可持续扩展。</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q">遇到问题如何快速定位？</button>
+          <div class="faq-a">先用帮助中心搜索关键词，再按分类查看处理步骤；无法解决可直接提交工单。</div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-shell">
+      <div class="footer-top">
+        <div class="footer-brand-wrap">
+          <a class="footer-brand" href="./index-redesign.html">
+            <img class="logo-img" src="https://chatboxai.app/icon.png" alt="Chatbox logo" />
+            <span>Chatbox AI</span>
+          </a>
+        </div>
+        <div class="footer-cols">
+          <div class="footer-col">
+            <h4>友情链接</h4>
+            <a href="https://chathub.gg/" target="_blank" rel="noreferrer">ChatHub</a>
+            <a href="https://www.appinn.com/" target="_blank" rel="noreferrer">果核剥壳网</a>
+          </div>
+          <div class="footer-col">
+            <h4>资源</h4>
+            <a href="./help-center-redesign.html">用户指南</a>
+            <a href="./download.html">下载</a>
+            <a href="./pricing.html">定价</a>
+            <a href="./help-center-redesign.html">帮助</a>
+          </div>
+          <div class="footer-col">
+            <h4>关注我们</h4>
+            <a href="https://www.xiaohongshu.com/" target="_blank" rel="noreferrer">小红书</a>
+            <a href="https://github.com/chatboxai/chatbox" target="_blank" rel="noreferrer">GitHub</a>
+            <a href="https://x.com/" target="_blank" rel="noreferrer">X / Twitter</a>
+          </div>
+          <div class="footer-col">
+            <h4>关于</h4>
+            <a href="https://chatboxai.app/zh/privacy-policy" target="_blank" rel="noreferrer">隐私政策</a>
+            <a href="https://chatboxai.app/zh/terms" target="_blank" rel="noreferrer">条款</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-lang-row">
+        <div class="footer-lang">文A 中文</div>
+      </div>
+      <div class="footer-divider"></div>
+      <div class="footer-bottom">
+        <div>© 2026 Mediocre, LLC. All Rights Reserved.</div>
+        <div class="footer-icons">
+          <a href="https://x.com/" target="_blank" rel="noreferrer" aria-label="X">𝕏</a>
+          <a href="https://github.com/chatboxai/chatbox" target="_blank" rel="noreferrer" aria-label="GitHub">◉</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <aside class="toast" id="trialToast">
+    <h4>快速下载，立即开始</h4>
+    <p>你还没有下载客户端，点击即可进入多平台下载页。</p>
+    <div class="row">
+      <a class="btn primary" id="toastStart" href="./download.html">立即下载</a>
+      <button class="btn" id="toastClose">稍后</button>
+    </div>
+  </aside>
+
+  <div class="modal-mask" id="trialModalMask">
+    <div class="modal">
+      <h3>继续浏览前，先完成快速下载</h3>
+      <p>你可以先下载客户端，再继续浏览其余信息。下载页已整理为四个核心平台入口。</p>
+      <div class="row">
+        <a class="btn primary" id="modalStart" href="./download.html">去下载页面</a>
+        <button class="btn" id="modalClose">继续浏览</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const topBar = document.querySelector(".top");
+    function syncTopBarVisibility() {
+      if (window.scrollY <= 0) {
+        topBar.classList.remove("hidden");
+      } else {
+        topBar.classList.add("hidden");
+      }
+    }
+    window.addEventListener("scroll", syncTopBarVisibility, { passive: true });
+    syncTopBarVisibility();
+
+    const downloadTrigger = document.getElementById("downloadTrigger");
+    const downloadPanel = document.getElementById("downloadPanel");
+    let downloadCloseTimer = null;
+    function openDownloadPanel() {
+      if (downloadCloseTimer) clearTimeout(downloadCloseTimer);
+      downloadPanel.classList.add("open");
+      topBar.classList.add("download-open");
+      downloadTrigger.setAttribute("aria-expanded", "true");
+    }
+    function scheduleCloseDownloadPanel() {
+      if (downloadCloseTimer) clearTimeout(downloadCloseTimer);
+      downloadCloseTimer = setTimeout(() => {
+        downloadPanel.classList.remove("open");
+        topBar.classList.remove("download-open");
+        downloadTrigger.setAttribute("aria-expanded", "false");
+      }, 300);
+    }
+    function closeDownloadPanel() {
+      downloadPanel.classList.remove("open");
+      topBar.classList.remove("download-open");
+      downloadTrigger.setAttribute("aria-expanded", "false");
+    }
+    downloadTrigger.addEventListener("mouseenter", openDownloadPanel);
+    downloadTrigger.addEventListener("mouseleave", scheduleCloseDownloadPanel);
+    downloadPanel.addEventListener("mouseenter", openDownloadPanel);
+    downloadPanel.addEventListener("mouseleave", scheduleCloseDownloadPanel);
+    document.addEventListener("click", (e) => {
+      if (!downloadPanel.contains(e.target) && !downloadTrigger.contains(e.target)) closeDownloadPanel();
+    });
+    document.addEventListener("keydown", (e) => { if (e.key === "Escape") closeDownloadPanel(); });
+
+    const track = document.getElementById("modelsTrack");
+    const modelsWrap = document.querySelector(".models-wrap");
+    const cards = Array.from(track.children);
+    const trackGap = parseFloat(getComputedStyle(track).gap || "0");
+    const step = (cards[0]?.getBoundingClientRect().width || 0) + trackGap;
+    let index = 0;
+    function updateModels() { track.style.transform = `translateX(${-index * step}px)`; }
+    document.getElementById("modelNext").addEventListener("click", () => {
+      index = Math.min(index + 1, Math.max(0, cards.length - 4));
+      updateModels();
+    });
+    document.getElementById("modelPrev").addEventListener("click", () => {
+      index = Math.max(0, index - 1);
+      updateModels();
+    });
+    modelsWrap.addEventListener("wheel", (e) => {
+      if (Math.abs(e.deltaX) > Math.abs(e.deltaY) && e.deltaX !== 0) {
+        e.preventDefault();
+        index = e.deltaX > 0 ? Math.min(index + 1, Math.max(0, cards.length - 4)) : Math.max(0, index - 1);
+        updateModels();
+      }
+    }, { passive: false });
+
+    const worldMap = document.querySelector(".world-map");
+    const globeImg = document.querySelector(".world-map img");
+    let globeRotate = 0;
+
+    function setGlobeRotate(deg) {
+      globeRotate = deg;
+      globeImg.style.setProperty("--globe-rotate", `${globeRotate}deg`);
+    }
+
+    const rotatingReviews = Array.from(document.querySelectorAll(".review-card"));
+    const reviewAngles = rotatingReviews.map((card, idx) => Number(card.dataset.rotate) || idx * 60);
+    let reviewIndex = 0;
+
+    const reviewSlots = ["slot-left", "slot-right-top", "slot-right-bottom"];
+    function setActiveReviewGroup(startIndex) {
+      rotatingReviews.forEach((card) => {
+        card.classList.remove("active", "slot-left", "slot-right-top", "slot-right-bottom");
+      });
+      const len = rotatingReviews.length;
+      for (let i = 0; i < 3; i += 1) {
+        const card = rotatingReviews[(startIndex + i) % len];
+        card.classList.add("active", reviewSlots[i]);
+      }
+      reviewIndex = startIndex;
+    }
+
+    function normalize(deg) {
+      return ((deg % 360) + 360) % 360;
+    }
+
+    function crossedClockwise(prev, curr, target) {
+      const p = normalize(prev);
+      const c = normalize(curr);
+      const t = normalize(target);
+      if (p <= c) return p < t && t <= c;
+      return t > p || t <= c;
+    }
+
+    let nextReviewIndex = 1;
+    let prevAngle = 0;
+    setGlobeRotate(0);
+    setActiveReviewGroup(0);
+    setInterval(() => {
+      prevAngle = globeRotate;
+      setGlobeRotate(globeRotate + 0.16);
+
+      const nextTarget = reviewAngles[nextReviewIndex];
+      if (crossedClockwise(prevAngle, globeRotate, nextTarget)) {
+        setActiveReviewGroup(nextReviewIndex);
+        nextReviewIndex = (nextReviewIndex + 1) % rotatingReviews.length;
+      }
+    }, 16);
+
+    document.querySelectorAll(".faq-q").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        btn.parentElement.classList.toggle("open");
+      });
+    });
+
+    let loggedIn = false;
+    const toast = document.getElementById("trialToast");
+    const modalMask = document.getElementById("trialModalMask");
+
+    function showToast() {
+      if (!loggedIn) toast.style.display = "block";
+    }
+    function showModal() {
+      if (!loggedIn) modalMask.style.display = "flex";
+    }
+
+    setTimeout(showToast, 12000);
+    setTimeout(showModal, 32000);
+
+    document.getElementById("toastClose").addEventListener("click", () => { toast.style.display = "none"; });
+    document.getElementById("modalClose").addEventListener("click", () => { modalMask.style.display = "none"; });
+    document.getElementById("loginBtn").addEventListener("click", () => {
+      loggedIn = true;
+      toast.style.display = "none";
+      modalMask.style.display = "none";
+    });
+    document.getElementById("langBtn").addEventListener("click", () => {});
+  </script>
+</body>
+</html>

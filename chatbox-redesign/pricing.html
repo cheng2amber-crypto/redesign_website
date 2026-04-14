@@ -1,0 +1,1011 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chatbox AI 价格</title>
+  <style>
+    :root {
+      --bg: #ffffff;
+      --text: #111827;
+      --muted: #6b7280;
+      --line: #e5e7eb;
+      --dark: #1f2937;
+      --card: #fff;
+      --accent: #e8956a;
+      --gold: #eec174;
+      --accent-soft: #fff3eb;
+      --pro-soft-bg: #fff2dc;
+      --pro-head-bg:
+        radial-gradient(140% 120% at 100% 0%, rgba(238,193,116,.58) 0%, rgba(238,193,116,.34) 30%, rgba(255,255,255,0) 72%),
+        linear-gradient(180deg, #fdf5e8 0%, #ffffff 74%);
+      --apple-font: "SF Pro Display", "SF Pro Text", -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", "Helvetica Neue", Arial, sans-serif;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: var(--apple-font);
+      background: var(--bg);
+      color: var(--text);
+    }
+    a { color: inherit; text-decoration: none; }
+    .container { width: min(1120px, calc(100% - 32px)); margin: 0 auto; }
+    .top {
+      position: sticky; top: 0; z-index: 30;
+      backdrop-filter: none;
+      background: #fff;
+      border-bottom: 1px solid var(--line);
+      transition: transform .25s ease;
+    }
+    .top.hidden { transform: translateY(-100%); }
+    .top-inner {
+      height: 72px; display: flex; align-items: center; justify-content: space-between; gap: 16px;
+    }
+    .brand {
+      display: inline-flex; align-items: center; gap: 10px; font-weight: 700; color: inherit; text-decoration: none;
+    }
+    .logo-img {
+      width: 34px; height: 34px; border-radius: 8px; border: 1px solid #f2f2f2;
+      object-fit: cover; background: #fff;
+    }
+    .nav { display: flex; align-items: center; gap: 16px; color: #1f2937; }
+    .nav a, .nav .nav-link {
+      font-size: 14px; font-weight: 600; color: inherit; text-decoration: none;
+    }
+    .nav a:hover, .nav .nav-link:hover { color: #eec174; }
+    .nav .nav-link {
+      border: 0; background: transparent; padding: 0; cursor: pointer;
+      display: inline-flex; align-items: center; gap: 6px; font-family: inherit;
+    }
+    .download-panel {
+      display: none;
+      border-top: 0;
+      background: #fff;
+      backdrop-filter: blur(12px);
+    }
+    .download-panel.open { display: block; }
+    .top.download-open { border-bottom-color: transparent; }
+    .download-panel-inner {
+      display: flex; align-items: center; gap: 10px; min-height: auto;
+      flex-wrap: wrap; padding: 10px 0;
+    }
+    .download-link {
+      width: 96px; border-radius: 12px; border: 0; background: transparent;
+      padding: 8px 6px; text-align: center; font-size: 11.5px; color: #1f2937;
+      display: inline-flex; flex-direction: column; align-items: center; gap: 6px; font-weight: 600;
+      line-height: 1.2;
+    }
+    .download-link img {
+      width: 26px; height: 26px; object-fit: contain; filter: grayscale(1);
+    }
+    .download-link .windows-logo {
+      width: 26px; height: 26px; display: block; fill: #000;
+    }
+    .download-link .apple-logo {
+      width: 26px; height: 26px; display: block; fill: #000;
+    }
+    .chip {
+      border: 1px solid var(--line); background: #fff; border-radius: 10px;
+      padding: 9px 12px; font-size: 13px; cursor: pointer;
+    }
+    .login-btn {
+      background: #1f2937; color: #fff; border: 0; border-radius: 10px;
+      padding: 9px 14px; font-weight: 700; cursor: pointer;
+    }
+
+    main { padding: 34px 0 44px; }
+    .header { text-align: center; margin-bottom: 14px; }
+    .header h1 {
+      margin: 0 0 8px; font-size: clamp(30px, 4vw, 42px);
+      letter-spacing: -.03em; font-weight: 760;
+    }
+    .sub { margin: 0 0 10px; color: var(--muted); line-height: 1.7; }
+    .license-box {
+      width: min(620px, 100%); margin: 0 auto 16px; border: 1px solid var(--line); border-radius: 12px;
+      background: #fff; padding: 12px; display: flex; align-items: center; justify-content: space-between; gap: 10px;
+    }
+    .license-box .t { font-weight: 700; font-size: 14px; }
+    .license-box .s { font-size: 12px; color: var(--muted); }
+    .enter-btn {
+      background: #1f2937; color: #fff; border: 0; border-radius: 10px; padding: 9px 14px; font-weight: 700;
+      font-size: 13px;
+    }
+    .enter-btn:hover { color: var(--gold); }
+    .service-title { text-align: center; font-weight: 800; font-size: 30px; margin: 0 0 8px; letter-spacing: -.03em; }
+    .cycle {
+      display: flex; justify-content: center; align-items: center; gap: 8px; margin-bottom: 16px;
+      color: var(--muted); font-size: 13px;
+    }
+    .switch {
+      width: 40px; height: 22px; border-radius: 999px; background: #fff; border: 1px solid #d1d5db; position: relative;
+    }
+    .switch::after {
+      content: ""; width: 18px; height: 18px; border-radius: 50%; background: #fff;
+      position: absolute; left: 20px; top: 2px; box-shadow: 0 1px 4px rgba(0,0,0,.2);
+    }
+    .off-chip {
+      padding: 4px 8px; border-radius: 999px; background: #fff; color: #374151; border: 1px solid #d1d5db;
+      font-weight: 700; font-size: 12px;
+    }
+
+    .pricing {
+      display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 10px; align-items: stretch;
+      margin-bottom: 14px;
+      background: #fff;
+      border: 0;
+      border-radius: 0;
+      overflow: visible;
+    }
+    .plan {
+      border: 1px solid #dfe3ea; border-radius: 14px; background: #fff; padding: 14px;
+      display: flex; flex-direction: column;
+      min-height: 0;
+      overflow: visible;
+      position: relative;
+      height: 100%;
+    }
+    .plan:last-child { border-right: 1px solid #dfe3ea; }
+    .plan.pro {
+      background: #ffffff;
+      border-color: #e2c186;
+      box-shadow: none;
+    }
+    .plan-head {
+      position: sticky;
+      top: 0;
+      background: #fff;
+      z-index: 3;
+      margin: 0;
+      padding: 0 0 6px;
+      box-shadow: none;
+      border: 0;
+      border-radius: 0;
+      display: flex;
+      flex-direction: column;
+    }
+    .plan.pro .plan-head {
+      margin: -14px -14px 0;
+      padding: 14px 14px 6px;
+      border-top-left-radius: 14px;
+      border-top-right-radius: 14px;
+      background: var(--pro-head-bg);
+    }
+    .plan .plan-name {
+      font-size: 34px;
+      margin: 0 0 8px;
+      font-weight: 500;
+      letter-spacing: -.02em;
+      min-height: 44px;
+      display: flex;
+      align-items: flex-start;
+      line-height: 1.08;
+    }
+    .pro-badge {
+      display: inline-flex; align-items: center; margin-left: 6px;
+      border-radius: 999px; padding: 3px 8px; font-size: 11px; font-weight: 800;
+      color: var(--gold); background: #fff7e8; border: 1px solid var(--gold);
+      vertical-align: middle;
+    }
+    .plan.pro .plan-name { position: relative; padding-right: 104px; }
+    .plan.pro .pro-badge {
+      position: absolute;
+      right: 0;
+      top: 2px;
+      margin-left: 0;
+      min-width: 74px;
+      justify-content: center;
+      padding: 4px 14px;
+    }
+    .plan .desc { font-size: 12px; color: var(--muted); margin-bottom: 10px; min-height: 34px; }
+    .price-wrap {
+      margin: 0 0 8px;
+      min-height: 64px;
+      display: flex;
+      align-items: flex-end;
+      flex-wrap: wrap;
+      column-gap: 4px;
+    }
+    .price-num {
+      font-size: 54px; line-height: 1; font-weight: 500; letter-spacing: -1.9px;
+      position: relative;
+      display: inline-block;
+      padding-left: .22em;
+    }
+    .price-num .currency {
+      font-size: .31em;
+      color: #b3bac6;
+      font-weight: 500;
+      margin-right: 0;
+      position: absolute;
+      left: 0;
+      top: .03em;
+      line-height: 1;
+    }
+    .price-num .amount { color: #111827; font-weight: 500; }
+    .origin { color: var(--muted); text-decoration: line-through; font-size: 12px; margin-left: 4px; }
+    .per { font-size: 12px; color: var(--muted); margin-left: 2px; }
+    .plan-slogan {
+      margin: 0 0 8px;
+      font-size: 14px;
+      line-height: 1.45;
+      font-weight: 700;
+      color: #111827;
+      min-height: 22px;
+    }
+    .start {
+      margin: 8px 0 10px; width: 100%; border-radius: 10px; border: 1px solid #d8dde6; background: #fff;
+      padding: 11px 12px; font-weight: 800; color: #111827; cursor: pointer;
+    }
+    .start:hover {
+      color: #111827;
+      background: #edf1f5;
+      border-color: #cfd6e0;
+      box-shadow: none;
+    }
+    .plan.pro .start:hover {
+      background: #1f2937;
+      color: var(--gold);
+      border-color: #1f2937;
+      box-shadow: 0 0 10px rgba(238,193,116,.28);
+    }
+    .plan.pro .start {
+      background: #1f2937; color: #ffffff; border-color: #1f2937;
+    }
+    .brief {
+      border: 0; border-radius: 0; background: transparent; padding: 0; margin-bottom: 10px;
+      color: #6b7280; font-size: 12px;
+    }
+    .brief { display: none; }
+    .features { margin: 0; padding: 14px 0 0; list-style: none; color: #1f2937; }
+    .plan .features { border-top: 0; }
+    .features li { margin-bottom: 7px; font-size: 13px; line-height: 1.45; display: flex; align-items: flex-start; gap: 8px; }
+    .features li:first-child { margin-top: 8px; }
+    .features li b { font-weight: 800; }
+    .features li::marker { content: ""; }
+    .feat-icon {
+      width: 18px; height: 18px; border-radius: 6px; display: inline-flex; align-items: center; justify-content: center;
+      font-size: 13px; line-height: 1; flex: 0 0 18px; margin-top: 1px;
+      color: #111827; background: transparent;
+    }
+    .features .detail {
+      display: block; margin-top: 2px; color: #6b7280; font-size: 12px; line-height: 1.4;
+      font-weight: 500;
+    }
+    .plan .desc,
+    .plan .features .detail {
+      display: none !important;
+    }
+
+    .compare {
+      border: 1px solid var(--line); border-radius: 16px; background: #fff;
+      padding: 14px; scroll-margin-top: 100px;
+      overflow: visible;
+      position: relative;
+    }
+    .compare-head {
+      position: sticky;
+      top: 0;
+      z-index: 12;
+      background: #fff;
+      padding-bottom: 8px;
+    }
+    .compare h2 { margin: 0 0 8px; font-size: 24px; letter-spacing: -.02em; text-align: center; }
+    .features-sticky {
+      position: static;
+      display: grid;
+      grid-template-columns: 32% repeat(4, 17%);
+      border-top: 0;
+      border-bottom: 1px solid #e8ebf1;
+      background: #fff;
+      box-shadow: none;
+      margin-bottom: 0;
+    }
+    .features-sticky div {
+      padding: 12px 8px;
+      font-size: 13px;
+      color: #374151;
+      font-weight: 800;
+      text-align: left;
+    }
+    .features-sticky div:not(:first-child) { text-align: center; }
+    .features-sticky div:nth-child(4) { background: var(--pro-soft-bg); }
+    .compare table {
+      width: 100%; border-collapse: collapse; margin-top: 0;
+      font-size: 13px;
+    }
+    .compare thead { display: none; }
+    .compare th, .compare td {
+      border-top: 1px solid #e8ebf1;
+      padding: 12px 8px; text-align: left; vertical-align: top;
+    }
+    .compare tbody tr:first-child td { border-top: 1px solid #e8ebf1; }
+    .compare th {
+      font-size: 13px; color: #374151; font-weight: 800; background: #fff;
+    }
+    .compare thead th {
+      position: sticky;
+      top: 0;
+      z-index: 5;
+      background: #ffffff;
+      box-shadow: 0 1px 0 #e5e7eb;
+    }
+    .compare th[data-col], .compare td[data-col] { text-align: center; width: 17%; }
+    .compare th[data-col="pro"], .compare td[data-col="pro"] { background: var(--pro-soft-bg); }
+    body[data-focus-plan="lite"] .compare [data-col="lite"],
+    body[data-focus-plan="free"] .compare [data-col="free"],
+    body[data-focus-plan="proplus"] .compare [data-col="proplus"] {
+      background: #fff7f1;
+    }
+    .muted { color: #6b7280; }
+    .small { font-size: 12px; color: #6b7280; }
+    .tag-row { margin-top: 6px; display: flex; gap: 6px; flex-wrap: wrap; }
+    .tag {
+      font-size: 11px; padding: 3px 6px; border-radius: 6px;
+      background: #fff; color: #4b5563; border: 1px solid #e5e7eb;
+    }
+
+    .license {
+      margin-top: 16px; border: 1px solid #e8ebf1; border-radius: 12px; background: #f3f4f6; padding: 12px;
+      position: relative;
+      --license-title-h: 56px;
+    }
+    .license h3 {
+      margin: 0; font-size: 24px; letter-spacing: -.01em; text-align: center;
+      position: sticky; top: 0; z-index: 12; background: #f3f4f6;
+      height: var(--license-title-h);
+      display: flex; align-items: center; justify-content: center;
+      border-bottom: 1px solid #e5e7eb;
+    }
+    .license table { width: 100%; border-collapse: separate; border-spacing: 0; font-size: 12px; }
+    .license th, .license td { border-top: 1px solid #e5e7eb; padding: 8px 6px; text-align: left; background: #f3f4f6; }
+    .license thead th { position: sticky; top: var(--license-title-h); z-index: 11; background: #f3f4f6; }
+    .status {
+      display: inline-flex; align-items: center; padding: 2px 6px;
+      border-radius: 999px; font-size: 11px; font-weight: 700;
+      color: #14532d; background: #dcfce7; border: 1px solid #bbf7d0;
+    }
+    .market-compare {
+      margin-top: 12px; border: 1px solid #e5e7eb; border-radius: 12px; background: #fff; padding: 10px;
+      position: relative;
+    }
+    .post-compare {
+      margin-top: 12px;
+    }
+    .market-compare h3 {
+      margin: 0 0 8px; font-size: 24px; letter-spacing: -.01em; text-align: center;
+      position: sticky; top: 0; z-index: 10; background: #fff; padding: 4px 0 8px;
+    }
+    .market-compare .note {
+      margin: 0 0 10px; color: #6b7280; font-size: 12px;
+    }
+    .market-compare table { width: 100%; border-collapse: collapse; font-size: 12px; }
+    .market-compare th, .market-compare td {
+      border-top: 1px solid #eceff3; padding: 8px 6px; text-align: left; vertical-align: top;
+    }
+    .market-compare th { color: #374151; background: #fff; font-weight: 700; }
+    .market-compare thead th { position: sticky; top: 52px; z-index: 9; background: #fff; }
+    .market-compare th:nth-child(2), .market-compare td:nth-child(2),
+    .market-compare th:nth-child(3), .market-compare td:nth-child(3) {
+      width: 120px; text-align: center;
+    }
+    .ok { color: #065f46; font-weight: 700; }
+    .no { color: #6b7280; font-weight: 700; }
+    .pro-col-head .pro-price {
+      display: block; margin-top: 2px; font-size: 15px; line-height: 1.2; font-weight: 600; color: #111827;
+    }
+    .download-now {
+      display: inline-flex; align-items: center; justify-content: center;
+      margin-top: 6px; border: 0; border-radius: 999px; padding: 7px 12px;
+      background: #111827; color: #fff; font-size: 12px; font-weight: 700; cursor: pointer;
+    }
+    .download-now:hover { color: var(--gold); }
+
+    .pay-mask {
+      position: fixed; inset: 0; background: rgba(17,24,39,.45); display: none;
+      align-items: center; justify-content: center; z-index: 120; padding: 16px;
+    }
+    .pay-mask.open { display: flex; }
+    .pay-modal {
+      width: min(980px, 100%); background: #fff; border: 1px solid #dfe3ea; border-radius: 16px;
+      padding: 18px; max-height: 90vh; overflow: auto;
+    }
+    .pay-top {
+      display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;
+    }
+    .pay-top h3 { margin: 0; font-size: 34px; }
+    .pay-close { border: 0; background: transparent; font-size: 30px; cursor: pointer; line-height: 1; }
+    .pay-grid { display: grid; grid-template-columns: 1.1fr .9fr; gap: 14px; }
+    .pay-card {
+      border: 1px solid #e5e7eb; border-radius: 14px; background: #fff; padding: 12px;
+    }
+    .pay-card h4 { margin: 0 0 10px; font-size: 18px; }
+    .pay-methods { display: grid; gap: 10px; }
+    .pay-method {
+      border: 1px solid #dfe3ea; border-radius: 12px; padding: 10px; background: #fff;
+      display: flex; align-items: center; justify-content: space-between; gap: 10px;
+    }
+    .pay-method .name { font-size: 20px; font-weight: 700; }
+    .pay-method .desc { color: #6b7280; font-size: 13px; margin-top: 2px; }
+    .pay-chip { border: 1px solid #d1d5db; border-radius: 999px; padding: 2px 8px; color: #16a34a; font-size: 12px; font-weight: 700; }
+    .pay-input {
+      width: 100%; border: 1px solid #e5e7eb; border-radius: 12px; padding: 12px; font-size: 15px; margin-top: 10px;
+      background: #fff;
+    }
+    .pay-actions { margin-top: 12px; display: flex; justify-content: flex-end; }
+    .pay-submit {
+      border: 0; border-radius: 999px; background: #111827; color: #fff; font-size: 18px; font-weight: 700;
+      padding: 12px 24px; cursor: pointer; width: 100%;
+    }
+
+    .footer {
+      margin-top: 24px;
+      background: #1f2b40;
+      color: #c9d0dc;
+      border-top: 0;
+      padding: 30px 0 16px;
+      font-size: 14px;
+    }
+    .footer-shell {
+      width: min(1540px, calc(100% - 40px));
+      margin: 0 auto;
+    }
+    .footer-top {
+      display: grid;
+      grid-template-columns: 1.2fr 1.8fr;
+      gap: 24px;
+      align-items: start;
+      min-height: 270px;
+    }
+    .footer-brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 46px;
+      line-height: 1;
+      font-weight: 700;
+      color: #eef2f7;
+      margin-top: 2px;
+    }
+    .footer-brand .logo-img { width: 46px; height: 46px; border-radius: 10px; }
+    .footer-cols {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(130px, 1fr));
+      gap: 36px;
+      padding-top: 4px;
+    }
+    .footer-col h4 { margin: 0 0 14px; font-size: 20px; color: #eef2f7; font-weight: 700; }
+    .footer-col a { display: block; color: #b4bfce; margin: 0 0 14px; font-size: 16px; }
+    .footer-lang-row {
+      display: flex;
+      justify-content: center;
+      margin-top: 20px;
+      margin-bottom: 22px;
+    }
+    .footer-lang {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 20px;
+      border-radius: 12px;
+      background: #f3f4f6;
+      color: #1f2937;
+      font-weight: 700;
+      font-size: 38px;
+      line-height: 1;
+      border: 1px solid #e5e7eb;
+    }
+    .footer-divider {
+      border-top: 1px solid rgba(255,255,255,.12);
+    }
+    .footer-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 18px;
+      color: #96a3b8;
+      font-size: 35px;
+      line-height: 1.2;
+    }
+    .footer-icons { display: flex; gap: 22px; font-size: 44px; }
+    @media (max-width: 980px) {
+      .pay-grid { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 1000px) {
+      .pricing { grid-template-columns: repeat(2, minmax(0,1fr)); }
+      .compare { overflow-x: auto; }
+      .compare table, .license table { min-width: 760px; }
+      .market-compare table { min-width: 620px; }
+      .features-sticky { min-width: 760px; }
+      .nav { display: none; }
+    }
+    @media (max-width: 760px) {
+      .pricing { grid-template-columns: 1fr; }
+      .footer-top { grid-template-columns: 1fr; min-height: auto; }
+      .footer-cols { grid-template-columns: 1fr 1fr; }
+      .footer-brand { font-size: 34px; }
+      .footer-lang { font-size: 28px; }
+      .footer-bottom { font-size: 22px; }
+      .footer-icons { font-size: 28px; }
+    }
+  </style>
+</head>
+<body data-focus-plan="pro">
+  <header class="top">
+    <div class="container top-inner">
+      <a class="brand" href="./index-redesign.html">
+        <img class="logo-img" src="https://chatboxai.app/icon.png" alt="Chatbox logo" />
+        <span>Chatbox AI</span>
+      </a>
+      <nav class="nav">
+        <a href="https://web.chatboxai.app" target="_blank" rel="noreferrer">开始对话</a>
+        <button class="nav-link" id="downloadTrigger" type="button" aria-expanded="false">下载 <span>▾</span></button>
+        <a href="./pricing.html">价格</a>
+        <a href="./help-center-redesign.html">用户指南</a>
+        <button class="login-btn">登录</button>
+        <button class="chip">中文 / EN</button>
+      </nav>
+    </div>
+    <div class="download-panel" id="downloadPanel">
+      <div class="container download-panel-inner">
+        <a class="download-link" href="https://apps.apple.com/app/chatbox-ai/id6471368056" target="_blank" rel="noreferrer"><img src="https://chatboxai.app/app-store.png" alt="iOS" />iOS</a>
+        <a class="download-link" href="https://chatboxai.app/install?download=android_apk" target="_blank" rel="noreferrer"><img src="https://chatboxai.app/android.svg" alt="Android APK" />Android</a>
+        <a class="download-link" href="https://play.google.com/store/apps/details?id=xyz.chatboxapp.chatbox" target="_blank" rel="noreferrer"><img src="https://chatboxai.app/google_play.svg" alt="Google Play" />Google Play</a>
+        <a class="download-link" href="./download.html#desktop-windows64"><svg class="windows-logo" viewBox="0 0 88 88" aria-hidden="true"><path d="M4 12.5 39 7v34H4Zm40 27.7h40V0L44 5.8ZM4 47h35v34L4 76Zm40 34 40-5.6V47H44Z"/></svg>Windows 64位</a>
+        <a class="download-link" href="./download.html#desktop-macos-intel"><svg class="apple-logo" viewBox="0 0 384 512" aria-hidden="true"><path d="M318.7 268.7c-.2-37.5 16.6-65.8 50.8-86.8-19.1-27.2-47.9-42.1-86.2-45.3-36.1-3.1-75.6 20.9-90.1 20.9-15.3 0-50.2-19.9-77.7-19.9C59.2 138.2 0 184.2 0 278.6c0 28 5.1 57 15.3 87 13.6 39.8 62.7 137.3 114 135.7 26.8-.7 45.7-19 80.5-19 33.8 0 51.3 19 80.5 19 51.7-.8 96.1-89.5 109-129.4-73.9-34.8-80.6-102.7-80.6-103.2zM261.2 95.2c27.7-32.9 25.2-62.8 24.4-73.2-24.4 1.4-52.7 16.6-68.8 35.3-17.7 20.3-28.1 45.5-25.9 73.5 26.3 2 50.5-11.4 70.3-35.6z"/></svg>macOS Intel</a>
+        <a class="download-link" href="./download.html#desktop-macos-apple"><svg class="apple-logo" viewBox="0 0 384 512" aria-hidden="true"><path d="M318.7 268.7c-.2-37.5 16.6-65.8 50.8-86.8-19.1-27.2-47.9-42.1-86.2-45.3-36.1-3.1-75.6 20.9-90.1 20.9-15.3 0-50.2-19.9-77.7-19.9C59.2 138.2 0 184.2 0 278.6c0 28 5.1 57 15.3 87 13.6 39.8 62.7 137.3 114 135.7 26.8-.7 45.7-19 80.5-19 33.8 0 51.3 19 80.5 19 51.7-.8 96.1-89.5 109-129.4-73.9-34.8-80.6-102.7-80.6-103.2zM261.2 95.2c27.7-32.9 25.2-62.8 24.4-73.2-24.4 1.4-52.7 16.6-68.8 35.3-17.7 20.3-28.1 45.5-25.9 73.5 26.3 2 50.5-11.4 70.3-35.6z"/></svg>macOS Apple</a>
+        <a class="download-link" href="./download.html#desktop-linux-x64"><img src="https://chatboxai.app/linux.svg" alt="Linux 64-bit" />Linux 64位</a>
+        <a class="download-link" href="./download.html#desktop-linux-arm64"><img src="https://chatboxai.app/linux.svg" alt="Linux ARM64" />Linux ARM64</a>
+        <a class="download-link" href="./download.html#desktop-win7"><svg class="windows-logo" viewBox="0 0 88 88" aria-hidden="true"><path d="M4 12.5 39 7v34H4Zm40 27.7h40V0L44 5.8ZM4 47h35v34L4 76Zm40 34 40-5.6V47H44Z"/></svg>Windows 7</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="header">
+      <div class="license-box">
+        <div>
+          <div class="t">已有 License Key ?</div>
+          <div class="s">点击续费 / 升级 / 购买扩展额度等。</div>
+        </div>
+        <button class="enter-btn">进入 →</button>
+      </div>
+      <div class="cycle">
+        <span>每月</span><span class="switch"></span><span>每年</span><span class="off-chip">省17%</span>
+      </div>
+    </section>
+
+    <section class="pricing">
+      <article class="plan">
+        <div class="plan-head">
+          <h3 class="plan-name">免费版</h3>
+          <p class="price-wrap"><span class="price-num"><span class="currency">$</span><span class="amount">0</span></span><span class="per">/每月</span></p>
+          <p class="plan-slogan">了解AI功能</p>
+          <button class="start" data-plan="free" type="button">升级套餐</button>
+        </div>
+        <ul class="features">
+          <li><b>与标准模型聊天</b></li>
+          <li><b>实时联网搜索与查询</b></li>
+        </ul>
+      </article>
+
+      <article class="plan">
+        <div class="plan-head">
+          <h3 class="plan-name">Lite</h3>
+          <p class="price-wrap"><span class="price-num"><span class="currency">$</span><span class="amount">3.5</span></span><span class="origin">$4.09</span><span class="per">/每月</span></p>
+          <p class="plan-slogan">轻度使用，畅聊够用</p>
+          <button class="start" data-plan="lite" type="button">升级套餐</button>
+        </div>
+        <ul class="features">
+          <li><b>2,000,000</b> 计算点数 / 每月</li>
+          <li><b>与标准模型聊天</b></li>
+          <li><b>实时联网搜索与查询</b></li>
+          <li><b>可生成 25 张 AI 绘图</b></li>
+          <li><b>与任何图片聊天</b></li>
+          <li><b>最多支持 5 台设备同时使用</b></li>
+        </ul>
+      </article>
+
+      <article class="plan pro">
+        <div class="plan-head">
+          <h3 class="plan-name">Pro <span class="pro-badge">热门</span></h3>
+          <p class="price-wrap"><span class="price-num"><span class="currency">$</span><span class="amount">16.7</span></span><span class="origin">$19.09</span><span class="per">/每月</span></p>
+          <p class="plan-slogan">办公科研进阶首选</p>
+          <button class="start" data-plan="pro" type="button">升级套餐</button>
+        </div>
+        <ul class="features">
+          <li><b>12,000,000</b> 计算点数 / 每月</li>
+          <li><b>与高级模型聊天</b></li>
+          <li><b>与标准模型聊天</b></li>
+          <li><b>实时联网搜索与查询</b></li>
+          <li><b>可生成 100 张 AI 绘图</b></li>
+          <li><b>与任何图片聊天</b></li>
+          <li><b>最多支持 5 台设备同时使用</b></li>
+          <li><b>与任何文档聊天</b></li>
+          <li><b>集成 MCP 服务</b></li>
+          <li><b>免配置知识库服务流水线</b></li>
+          <li><b>文档预处理</b></li>
+        </ul>
+      </article>
+
+      <article class="plan">
+        <div class="plan-head">
+          <h3 class="plan-name">Pro+</h3>
+          <p class="price-wrap"><span class="price-num"><span class="currency">$</span><span class="amount">33.33</span></span><span class="origin">$39.09</span><span class="per">/每月</span></p>
+          <p class="plan-slogan">有效提升效率</p>
+          <button class="start" data-plan="proplus" type="button">升级套餐</button>
+        </div>
+        <ul class="features">
+          <li><b>30,000,000</b> 计算点数 / 每月</li>
+          <li><b>与高级模型聊天</b></li>
+          <li><b>与标准模型聊天</b></li>
+          <li><b>实时联网搜索与查询</b></li>
+          <li><b>可生成 200 张 AI 绘图</b></li>
+          <li><b>与任何图片聊天</b></li>
+          <li><b>最多支持 5 台设备同时使用</b></li>
+          <li><b>与任何文档聊天</b></li>
+          <li><b>集成 MCP 服务</b></li>
+          <li><b>免配置知识库服务流水线</b></li>
+          <li><b>文档预处理</b></li>
+        </ul>
+      </article>
+    </section>
+
+    <section class="compare" id="compareSection">
+      <div class="compare-head">
+        <h2>Features</h2>
+        <div class="features-sticky">
+          <div></div>
+          <div>免费版</div>
+          <div>Lite</div>
+          <div>Pro</div>
+          <div>Pro+</div>
+        </div>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>Features</th>
+            <th data-col="free">免费版</th>
+            <th data-col="lite">Lite</th>
+            <th data-col="pro">Pro</th>
+            <th data-col="proplus">Pro+</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              <b>聊天 标准模型</b>
+              <div class="small">2,000,000 计算点数 每月</div>
+              <div class="tag-row">
+                <span class="tag">GPT 5-mini</span><span class="tag">GPT 4o-mini</span><span class="tag">Claude 3.5 Haiku</span>
+                <span class="tag">Gemini 2.5 Flash</span><span class="tag">Qwen3 235B</span><span class="tag">DeepSeek V3</span><span class="tag">DeepSeek R1</span>
+              </div>
+            </td>
+            <td data-col="free">✓</td>
+            <td data-col="lite">✓</td>
+            <td data-col="pro">✓</td>
+            <td data-col="proplus">✓</td>
+          </tr>
+          <tr>
+            <td>
+              <b>聊天 高级模型</b>
+              <div class="small">12,000,000 计算点数 / 每月起</div>
+              <div class="tag-row"><span class="tag">GPT 5</span><span class="tag">Claude 4.5</span><span class="tag">Gemini 3 Pro</span></div>
+            </td>
+            <td data-col="free" class="muted">✕</td>
+            <td data-col="lite" class="muted">✕</td>
+            <td data-col="pro">✓</td>
+            <td data-col="proplus">✓</td>
+          </tr>
+          <tr>
+            <td><b>即时 网络搜索与浏览</b><div class="small">AI 联网搜索并引用可信来源</div></td>
+            <td data-col="free">✓</td>
+            <td data-col="lite">✓</td>
+            <td data-col="pro">✓</td>
+            <td data-col="proplus">✓</td>
+          </tr>
+          <tr>
+            <td><b>生成 AI 绘图</b></td>
+            <td data-col="free" class="muted">✕</td>
+            <td data-col="lite">25 drawings</td>
+            <td data-col="pro">100 drawings</td>
+            <td data-col="proplus">200 drawings</td>
+          </tr>
+          <tr>
+            <td><b>聊天 任何图片</b><div class="small">支持截图 / 设计稿 / 复杂图表</div></td>
+            <td data-col="free" class="muted">✕</td>
+            <td data-col="lite">✓</td>
+            <td data-col="pro">✓</td>
+            <td data-col="proplus">✓</td>
+          </tr>
+          <tr>
+            <td><b>最多支持 5 台设备同时使用</b></td>
+            <td data-col="free" class="muted">✕</td>
+            <td data-col="lite">✓</td>
+            <td data-col="pro">✓</td>
+            <td data-col="proplus">✓</td>
+          </tr>
+          <tr>
+            <td><b>聊天 任何文档</b><div class="small">支持 PDF / DOC / XLS / TXT</div></td>
+            <td data-col="free" class="muted">✕</td>
+            <td data-col="lite" class="muted">✕</td>
+            <td data-col="pro">✓</td>
+            <td data-col="proplus">✓</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="post-compare">
+      <div class="license">
+        <h3>拥有 License Key</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>购买时间</th>
+              <th>License Key</th>
+              <th>套餐</th>
+              <th>状态</th>
+              <th>剩余额度</th>
+              <th>扩展额度</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>2026-04-02</td>
+              <td>36fa7d81*************</td>
+              <td>Pro</td>
+              <td><span class="status">已激活</span></td>
+              <td>计算点数 786K/5M</td>
+              <td>购买扩展</td>
+            </tr>
+            <tr>
+              <td>2026-03-22</td>
+              <td>2237b3e6*************</td>
+              <td>Pro</td>
+              <td><span class="status">已激活</span></td>
+              <td>计算点数 1.0M/10M</td>
+              <td>购买扩展</td>
+            </tr>
+            <tr>
+              <td>2026-03-17</td>
+              <td>f31fc90f*************</td>
+              <td>Pro</td>
+              <td><span class="status">已激活</span></td>
+              <td>计算点数 1.1M/10M</td>
+              <td>购买扩展</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="market-compare">
+        <h3>比较Chatbox套餐与其他AI工具</h3>
+        <table>
+          <thead>
+            <tr>
+              <th></th>
+              <th class="pro-col-head">Chatbox AI Pro<span class="pro-price">$16.7</span><button class="download-now" id="compareStartPro" type="button">升级套餐</button></th>
+              <th>ChatGPT Plus</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>GPT-5 与 GPT-5 mini</td><td class="ok">✓</td><td class="ok">✓</td></tr>
+            <tr><td>Claude 4.5 Sonnet</td><td class="ok">✓</td><td class="no">✕</td></tr>
+            <tr><td>Gemini 2.5 Pro / Flash</td><td class="ok">✓</td><td class="no">✕</td></tr>
+            <tr><td>DeepSeek V3 / R1</td><td class="ok">✓</td><td class="no">✕</td></tr>
+            <tr><td>联网搜索</td><td class="ok">✓</td><td class="ok">✓</td></tr>
+            <tr><td>文档聊天（PDF/DOC/XLS/TXT）</td><td class="ok">✓</td><td class="no">✕</td></tr>
+            <tr><td>图片理解与对话</td><td class="ok">✓</td><td class="ok">✓</td></tr>
+            <tr><td>多模型统一入口</td><td class="ok">✓</td><td class="no">✕</td></tr>
+            <tr><td>MCP 服务接入</td><td class="ok">✓</td><td class="no">✕</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-shell">
+      <div class="footer-top">
+        <div class="footer-brand-wrap">
+          <a class="footer-brand" href="./index-redesign.html">
+            <img class="logo-img" src="https://chatboxai.app/icon.png" alt="Chatbox logo" />
+            <span>Chatbox AI</span>
+          </a>
+        </div>
+        <div class="footer-cols">
+          <div class="footer-col">
+            <h4>友情链接</h4>
+            <a href="https://chathub.gg/" target="_blank" rel="noreferrer">ChatHub</a>
+            <a href="https://www.appinn.com/" target="_blank" rel="noreferrer">果核剥壳网</a>
+          </div>
+          <div class="footer-col">
+            <h4>资源</h4>
+            <a href="./help-center-redesign.html">用户指南</a>
+            <a href="./download.html">下载</a>
+            <a href="./pricing.html">定价</a>
+            <a href="./help-center-redesign.html">帮助</a>
+          </div>
+          <div class="footer-col">
+            <h4>关注我们</h4>
+            <a href="https://www.xiaohongshu.com/" target="_blank" rel="noreferrer">小红书</a>
+            <a href="https://github.com/chatboxai/chatbox" target="_blank" rel="noreferrer">GitHub</a>
+            <a href="https://x.com/" target="_blank" rel="noreferrer">X / Twitter</a>
+          </div>
+          <div class="footer-col">
+            <h4>关于</h4>
+            <a href="https://chatboxai.app/zh/privacy-policy" target="_blank" rel="noreferrer">隐私政策</a>
+            <a href="https://chatboxai.app/zh/terms" target="_blank" rel="noreferrer">条款</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-lang-row">
+        <div class="footer-lang">文A 中文</div>
+      </div>
+      <div class="footer-divider"></div>
+      <div class="footer-bottom">
+        <div>© 2026 Mediocre, LLC. All Rights Reserved.</div>
+        <div class="footer-icons">
+          <a href="https://x.com/" target="_blank" rel="noreferrer" aria-label="X">𝕏</a>
+          <a href="https://github.com/chatboxai/chatbox" target="_blank" rel="noreferrer" aria-label="GitHub">◉</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <div class="pay-mask" id="payMask">
+    <div class="pay-modal" role="dialog" aria-modal="true" aria-label="支付选项">
+      <div class="pay-top">
+        <h3 id="payTitle">Pro 套餐支付选项</h3>
+        <button class="pay-close" id="payClose" type="button">×</button>
+      </div>
+      <div class="pay-grid">
+        <div class="pay-card">
+          <h4>付款方式</h4>
+          <div class="pay-methods">
+            <div class="pay-method">
+              <div>
+                <div class="name">微信支付 / 支付宝 <span class="pay-chip">推荐</span></div>
+                <div class="desc">使用微信支付或支付宝购买访问时间。</div>
+              </div>
+            </div>
+            <div class="pay-method">
+              <div>
+                <div class="name">银行卡</div>
+                <div class="desc">使用 Visa、MasterCard、Apple Pay、Google Pay 订阅。</div>
+              </div>
+            </div>
+          </div>
+          <input class="pay-input" type="text" placeholder="卡号" />
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+            <input class="pay-input" type="text" placeholder="有效期" />
+            <input class="pay-input" type="text" placeholder="安全码" />
+          </div>
+        </div>
+        <div class="pay-card">
+          <h4 id="payPlanName">Pro 套餐</h4>
+          <div class="desc" style="font-size:14px;margin-bottom:8px;color:#374151;">热门功能</div>
+          <ul class="features" style="margin-bottom:10px;">
+            <li><b>更智能、更快速的回复</b></li>
+            <li><b>更高的消息和文件上传额度</b></li>
+            <li><b>更高质量的图像生成</b></li>
+            <li><b>更强的记忆与上下文能力</b></li>
+          </ul>
+          <div style="border-top:1px solid #e5e7eb;padding-top:10px;margin-top:10px;">
+            <div style="display:flex;justify-content:space-between;margin-bottom:6px;"><span>按月订阅</span><span id="payAmount">$16.7</span></div>
+            <div style="display:flex;justify-content:space-between;font-weight:700;font-size:20px;"><span>今日应付金额</span><span id="payAmountStrong">$16.7</span></div>
+          </div>
+          <div class="pay-actions">
+            <button class="pay-submit" type="button">订阅</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const topBar = document.querySelector(".top");
+    function syncTopBarVisibility() {
+      if (window.scrollY <= 0) topBar.classList.remove("hidden");
+      else topBar.classList.add("hidden");
+    }
+    window.addEventListener("scroll", syncTopBarVisibility, { passive: true });
+    syncTopBarVisibility();
+
+    const downloadTrigger = document.getElementById("downloadTrigger");
+    const downloadPanel = document.getElementById("downloadPanel");
+    let downloadCloseTimer = null;
+    function openDownloadPanel() {
+      if (downloadCloseTimer) clearTimeout(downloadCloseTimer);
+      downloadPanel.classList.add("open");
+      topBar.classList.add("download-open");
+      downloadTrigger.setAttribute("aria-expanded", "true");
+    }
+    function scheduleCloseDownloadPanel() {
+      if (downloadCloseTimer) clearTimeout(downloadCloseTimer);
+      downloadCloseTimer = setTimeout(() => {
+        downloadPanel.classList.remove("open");
+        topBar.classList.remove("download-open");
+        downloadTrigger.setAttribute("aria-expanded", "false");
+      }, 300);
+    }
+    function closeDownloadPanel() {
+      downloadPanel.classList.remove("open");
+      topBar.classList.remove("download-open");
+      downloadTrigger.setAttribute("aria-expanded", "false");
+    }
+    downloadTrigger.addEventListener("mouseenter", openDownloadPanel);
+    downloadTrigger.addEventListener("mouseleave", scheduleCloseDownloadPanel);
+    downloadPanel.addEventListener("mouseenter", openDownloadPanel);
+    downloadPanel.addEventListener("mouseleave", scheduleCloseDownloadPanel);
+    document.addEventListener("click", (e) => {
+      if (!downloadPanel.contains(e.target) && !downloadTrigger.contains(e.target)) closeDownloadPanel();
+    });
+    document.addEventListener("keydown", (e) => { if (e.key === "Escape") closeDownloadPanel(); });
+
+    const compareSection = document.getElementById("compareSection");
+    const payMask = document.getElementById("payMask");
+    const payClose = document.getElementById("payClose");
+    const payTitle = document.getElementById("payTitle");
+    const payPlanName = document.getElementById("payPlanName");
+    const payAmount = document.getElementById("payAmount");
+    const payAmountStrong = document.getElementById("payAmountStrong");
+    const compareStartPro = document.getElementById("compareStartPro");
+    const planAmountMap = {
+      free: "$0",
+      lite: "$3.5",
+      pro: "$16.7",
+      proplus: "$33.33"
+    };
+    const planNameMap = {
+      free: "免费版",
+      lite: "Lite",
+      pro: "Pro",
+      proplus: "Pro+"
+    };
+    function openPay(plan) {
+      document.body.dataset.focusPlan = plan;
+      payTitle.textContent = `${planNameMap[plan]} 套餐支付选项`;
+      payPlanName.textContent = `${planNameMap[plan]} 套餐`;
+      payAmount.textContent = planAmountMap[plan];
+      payAmountStrong.textContent = planAmountMap[plan];
+      payMask.classList.add("open");
+    }
+    document.querySelectorAll(".start").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        openPay(btn.dataset.plan);
+      });
+    });
+    if (compareStartPro) {
+      compareStartPro.addEventListener("click", () => openPay("pro"));
+    }
+    document.querySelectorAll(".plan .features li").forEach((li) => {
+      const t = li.textContent;
+      let icon = "•";
+      if (/高级模型|模型/.test(t)) icon = "✦";
+      else if (/消息|上传|聊天/.test(t)) icon = "◉";
+      else if (/联网|搜索|查询/.test(t)) icon = "◎";
+      else if (/图片|绘图/.test(t)) icon = "▣";
+      else if (/文档|PDF|DOC|XLS|TXT/.test(t)) icon = "▤";
+      else if (/MCP|服务器/.test(t)) icon = "⌁";
+      else if (/知识库|记忆/.test(t)) icon = "◌";
+      else if (/预处理|识别/.test(t)) icon = "◇";
+      else if (/设备/.test(t)) icon = "▦";
+      else if (/点数|配额/.test(t)) icon = "↯";
+      const marker = document.createElement("span");
+      marker.className = "feat-icon";
+      marker.textContent = icon;
+      li.prepend(marker);
+    });
+    payClose.addEventListener("click", () => payMask.classList.remove("open"));
+    payMask.addEventListener("click", (e) => {
+      if (e.target === payMask) payMask.classList.remove("open");
+    });
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") payMask.classList.remove("open");
+    });
+  </script>
+</body>
+</html>

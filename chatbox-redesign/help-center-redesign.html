@@ -1,0 +1,600 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chatbox AI 用户指南</title>
+  <style>
+    :root {
+      --logo-accent: #eec174;
+      --logo-accent-dark: #c88428;
+      --bg: linear-gradient(180deg, #fbe2af 0%, #fff0d1 46%, #fff8eb 100%);
+      --card: #f3f4f8;
+      --text: #111827;
+      --line: #e5e7eb;
+      --apple-font: "SF Pro Display", "SF Pro Text", -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", "Helvetica Neue", Arial, sans-serif;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: var(--apple-font); color: var(--text); background: var(--bg); }
+    a { color: inherit; text-decoration: none; }
+    .container { width: min(1200px, calc(100% - 32px)); margin: 0 auto; }
+
+    .top {
+      position: sticky; top: 0; z-index: 40;
+      background: #fff;
+      backdrop-filter: none;
+      border-bottom: 1px solid var(--line);
+      transition: transform .24s ease;
+    }
+    .top.hide { transform: translateY(-100%); }
+    .top-inner { height: 72px; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+    .brand { display: inline-flex; align-items: center; gap: 10px; font-weight: 700; color: inherit; }
+    .logo-img {
+      width: 34px; height: 34px; border-radius: 8px; border: 1px solid #f2f2f2;
+      object-fit: cover; background: #fff;
+    }
+    .nav { display: flex; align-items: center; gap: 16px; color: #1f2937; }
+    .nav a, .nav .nav-link {
+      font-size: 14px; font-weight: 600; text-decoration: none; color: inherit;
+    }
+    .nav a:hover, .nav .nav-link:hover { color: var(--logo-accent-dark); }
+    .nav .nav-link {
+      border: 0; background: transparent; padding: 0; cursor: pointer;
+      display: inline-flex; align-items: center; gap: 6px; font-family: inherit;
+    }
+    .download-panel {
+      display: none; border-top: 0; background: #fff;
+      backdrop-filter: blur(12px); box-shadow: 0 16px 24px rgba(17,24,39,.08);
+      border-bottom-left-radius: 34px; border-bottom-right-radius: 34px;
+      margin-top: -1px;
+    }
+    .download-panel.open { display: block; }
+    .top.download-open { border-bottom-color: transparent; }
+    .download-panel-inner {
+      display: flex; align-items: center; gap: 10px; flex-wrap: wrap; padding: 10px 0 14px;
+    }
+    .download-link {
+      width: 96px; border-radius: 12px; border: 0; background: transparent; padding: 8px 6px;
+      text-align: center; font-size: 11.5px; color: #1f2937;
+      display: inline-flex; flex-direction: column; align-items: center; gap: 6px;
+      font-weight: 600; line-height: 1.2;
+    }
+    .download-link img { width: 26px; height: 26px; object-fit: contain; filter: grayscale(1); }
+    .download-link .windows-logo { width: 26px; height: 26px; display: block; fill: #000; }
+    .download-link .apple-logo { width: 26px; height: 26px; display: block; fill: #000; }
+    .chip {
+      border: 1px solid var(--line); background: #fff; border-radius: 10px;
+      padding: 9px 12px; font-size: 13px; cursor: pointer;
+    }
+    .login-btn {
+      background: #1f2937; color: #fff; border: 0; border-radius: 10px;
+      padding: 9px 14px; font-weight: 700; cursor: pointer;
+    }
+
+    main { padding: 28px 0 38px; }
+    .hero { text-align: center; margin-bottom: 18px; }
+    .hero h1 {
+      margin: 0 0 12px;
+      font-size: clamp(24px, 3.4vw, 42px);
+      line-height: 1.12;
+      letter-spacing: -0.03em;
+    }
+    .search-wrap {
+      width: min(860px, 100%);
+      margin: 0 auto;
+      background: rgba(255,255,255,.86);
+      border: 1px solid #ece8df;
+      border-radius: 999px;
+      padding: 5px;
+      display: flex; align-items: center; gap: 7px;
+    }
+    .search-wrap svg {
+      width: 16px; height: 16px; margin-left: 12px; color: #9ca3af; flex: 0 0 auto;
+    }
+    .search-wrap input {
+      border: 0; background: transparent; width: 100%; font-size: 16px; color: #111827;
+      padding: 10px 2px; outline: none;
+    }
+    .search-wrap button {
+      border: 0; border-radius: 999px; background: #1f2937; color: #fff; font-weight: 800;
+      padding: 10px 18px; font-size: 13px; cursor: pointer; margin-right: 4px; transition: all .2s ease;
+      white-space: nowrap;
+      writing-mode: horizontal-tb;
+      text-orientation: mixed;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 64px;
+      line-height: 1;
+    }
+    .search-wrap button:hover { color: var(--logo-accent); background: #111827; }
+
+    .topics { margin-top: 60px; }
+    .topics h2 {
+      text-align: center;
+      margin: 0 0 24px;
+      font-size: clamp(21px, 2.7vw, 34px);
+      line-height: 1.14;
+      letter-spacing: -0.03em;
+    }
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 14px;
+      margin-bottom: 14px;
+    }
+    .card {
+      border: 1px solid #ecdcbc;
+      border-radius: 16px;
+      background: transparent;
+      min-height: 150px;
+      padding: 14px 12px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      text-align: center;
+      cursor: pointer;
+      transition: transform .2s ease, box-shadow .2s ease, background-color .2s ease;
+    }
+    .card:hover {
+      transform: translateY(-2px);
+      background: rgba(255, 255, 255, .26);
+      box-shadow: 0 10px 18px rgba(31, 41, 55, .08);
+    }
+    .icon-box {
+      width: 44px; height: 44px; border-radius: 12px;
+      display: inline-flex; align-items: center; justify-content: center;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.35);
+    }
+    .icon-box svg {
+      width: 24px; height: 24px; stroke: #fff; fill: none; stroke-width: 2.1;
+      stroke-linecap: round; stroke-linejoin: round;
+    }
+    .icon-sprite {
+      width: 72px;
+      height: 72px;
+      border-radius: 14px;
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: contain;
+      box-shadow: 0 8px 14px rgba(17, 24, 39, .1);
+    }
+    .icon-s1 { background-image: url("./assets/help-icons/image1.png"); }
+    .icon-s2 { background-image: url("./assets/help-icons/image2.png"); }
+    .icon-s3 { background-image: url("./assets/help-icons/image3.png"); }
+    .icon-s4 { background-image: url("./assets/help-icons/image4.png"); }
+    .icon-s5 { background-image: url("./assets/help-icons/image5.png"); }
+    .icon-s6 { background-image: url("./assets/help-icons/image6.png"); }
+    .icon-s7 { background-image: url("./assets/help-icons/image7.png"); }
+    .icon-s8 { background-image: url("./assets/help-icons/image8.png"); }
+    .icon-s9 { background-image: url("./assets/help-icons/image9.png"); }
+    .icon-s10 { background-image: url("./assets/help-icons/image10.png"); }
+    .card .title {
+      margin: 0;
+      font-size: clamp(13px, 1.25vw, 19px);
+      line-height: 1.25;
+      letter-spacing: -0.01em;
+      color: #2d3139;
+      font-weight: 700;
+    }
+    .hidden { display: none !important; }
+    .view-all-wrap {
+      display: flex;
+      justify-content: center;
+      margin-top: 6px;
+    }
+    .view-all {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 8px 18px;
+      border-radius: 999px;
+      border: 2px solid var(--logo-accent);
+      background: transparent;
+      color: var(--logo-accent);
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      transition: all .2s ease;
+    }
+    .view-all:hover {
+      background: var(--logo-accent);
+      color: #111827;
+      box-shadow: 0 10px 20px rgba(238,193,116,.35);
+    }
+    .updates,
+    .contact-support {
+      margin-top: 80px;
+    }
+    .updates h2,
+    .contact-support h2 {
+      text-align: center;
+      margin: 0 0 24px;
+      font-size: clamp(21px, 2.7vw, 34px);
+      line-height: 1.14;
+      letter-spacing: -0.03em;
+    }
+    .updates-panel {
+      border-radius: 24px;
+      background: rgba(255, 255, 255, .78);
+      border: 1px solid #efe4d2;
+      padding: 22px;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+    }
+    .update-card {
+      display: block;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid #eddcc4;
+      background: #fff;
+    }
+    .update-card img {
+      width: 100%;
+      height: 170px;
+      object-fit: cover;
+      display: block;
+    }
+    .update-card p {
+      margin: 0;
+      padding: 12px 14px;
+      font-size: 15px;
+      color: #4b5563;
+      font-weight: 600;
+      line-height: 1.35;
+    }
+    .contact-support {
+      text-align: center;
+      padding: 8px 0 2px;
+    }
+    .contact-support p {
+      margin: 0;
+      font-size: clamp(13px, 1.35vw, 22px);
+      color: #6b7280;
+      line-height: 1.45;
+    }
+    .contact-btn {
+      margin-top: 18px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 8px 18px;
+      border-radius: 999px;
+      background: transparent;
+      border: 2px solid var(--logo-accent);
+      color: var(--logo-accent);
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform .2s ease, box-shadow .2s ease;
+    }
+    .contact-btn:hover {
+      background: var(--logo-accent);
+      color: #111827;
+      box-shadow: 0 10px 20px rgba(238,193,116,.35);
+    }
+
+    .footer {
+      margin-top: 24px;
+      background: #1f2b40;
+      color: #c9d0dc;
+      border-top: 0;
+      padding: 30px 0 16px;
+      font-size: 14px;
+    }
+    .footer-shell {
+      width: min(1540px, calc(100% - 40px));
+      margin: 0 auto;
+    }
+    .footer-top {
+      display: grid;
+      grid-template-columns: 1.2fr 1.8fr;
+      gap: 24px;
+      align-items: start;
+      min-height: 270px;
+    }
+    .footer-brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 46px;
+      line-height: 1;
+      font-weight: 700;
+      color: #eef2f7;
+      margin-top: 2px;
+    }
+    .footer-brand .logo-img { width: 46px; height: 46px; border-radius: 10px; }
+    .footer-cols {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(130px, 1fr));
+      gap: 36px;
+      padding-top: 4px;
+    }
+    .footer-col h4 { margin: 0 0 14px; font-size: 20px; color: #eef2f7; font-weight: 700; }
+    .footer-col a { display: block; color: #b4bfce; margin: 0 0 14px; font-size: 16px; }
+    .footer-lang-row {
+      display: flex;
+      justify-content: center;
+      margin-top: 20px;
+      margin-bottom: 22px;
+    }
+    .footer-lang {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 20px;
+      border-radius: 12px;
+      background: #f3f4f6;
+      color: #1f2937;
+      font-weight: 700;
+      font-size: 38px;
+      line-height: 1;
+      border: 1px solid #e5e7eb;
+    }
+    .footer-divider {
+      border-top: 1px solid rgba(255,255,255,.12);
+    }
+    .footer-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 18px;
+      color: #96a3b8;
+      font-size: 35px;
+      line-height: 1.2;
+    }
+    .footer-icons { display: flex; gap: 22px; font-size: 44px; }
+
+    @media (max-width: 1024px) {
+      .cards { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      .updates-panel { grid-template-columns: 1fr; }
+      .update-card img { height: 210px; }
+    }
+    @media (max-width: 760px) {
+      .container { width: calc(100% - 20px); }
+      .nav { display: none; }
+      .cards { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+      .card { min-height: 132px; border-radius: 14px; gap: 10px; }
+      .card .title { font-size: 15px; }
+      .updates h2, .contact-support h2 { font-size: 28px; }
+      .contact-support p { font-size: 20px; }
+      .contact-btn { font-size: 14px; padding: 7px 16px; }
+      .footer-top { grid-template-columns: 1fr; min-height: auto; }
+      .footer-cols { grid-template-columns: 1fr 1fr; }
+      .footer-brand { font-size: 34px; }
+      .footer-lang { font-size: 28px; }
+      .footer-bottom { font-size: 22px; }
+      .footer-icons { font-size: 28px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="top">
+    <div class="container top-inner">
+      <a class="brand" href="./index-redesign.html">
+        <img class="logo-img" src="https://chatboxai.app/icon.png" alt="Chatbox logo" />
+        <span>Chatbox AI</span>
+      </a>
+      <nav class="nav">
+        <a href="https://web.chatboxai.app" target="_blank" rel="noreferrer">开始对话</a>
+        <button class="nav-link" id="downloadTrigger" type="button" aria-expanded="false">下载 <span>▾</span></button>
+        <a href="./pricing.html">价格</a>
+        <a href="./help-center-redesign.html">用户指南</a>
+        <button class="login-btn">登录</button>
+      </nav>
+    </div>
+    <div class="download-panel" id="downloadPanel">
+      <div class="container download-panel-inner">
+        <a class="download-link" href="https://apps.apple.com/app/chatbox-ai/id6471368056" target="_blank" rel="noreferrer"><img src="https://chatboxai.app/app-store.png" alt="iOS" />iOS</a>
+        <a class="download-link" href="https://chatboxai.app/install?download=android_apk" target="_blank" rel="noreferrer"><img src="https://chatboxai.app/android.svg" alt="Android APK" />Android</a>
+        <a class="download-link" href="https://play.google.com/store/apps/details?id=xyz.chatboxapp.chatbox" target="_blank" rel="noreferrer"><img src="https://chatboxai.app/google_play.svg" alt="Google Play" />Google Play</a>
+        <a class="download-link" href="./download.html#desktop-windows64"><svg class="windows-logo" viewBox="0 0 88 88" aria-hidden="true"><path d="M4 12.5 39 7v34H4Zm40 27.7h40V0L44 5.8ZM4 47h35v34L4 76Zm40 34 40-5.6V47H44Z"/></svg>Windows 64位</a>
+        <a class="download-link" href="./download.html#desktop-macos-intel"><svg class="apple-logo" viewBox="0 0 384 512" aria-hidden="true"><path d="M318.7 268.7c-.2-37.5 16.6-65.8 50.8-86.8-19.1-27.2-47.9-42.1-86.2-45.3-36.1-3.1-75.6 20.9-90.1 20.9-15.3 0-50.2-19.9-77.7-19.9C59.2 138.2 0 184.2 0 278.6c0 28 5.1 57 15.3 87 13.6 39.8 62.7 137.3 114 135.7 26.8-.7 45.7-19 80.5-19 33.8 0 51.3 19 80.5 19 51.7-.8 96.1-89.5 109-129.4-73.9-34.8-80.6-102.7-80.6-103.2zM261.2 95.2c27.7-32.9 25.2-62.8 24.4-73.2-24.4 1.4-52.7 16.6-68.8 35.3-17.7 20.3-28.1 45.5-25.9 73.5 26.3 2 50.5-11.4 70.3-35.6z"/></svg>macOS Intel</a>
+        <a class="download-link" href="./download.html#desktop-macos-apple"><svg class="apple-logo" viewBox="0 0 384 512" aria-hidden="true"><path d="M318.7 268.7c-.2-37.5 16.6-65.8 50.8-86.8-19.1-27.2-47.9-42.1-86.2-45.3-36.1-3.1-75.6 20.9-90.1 20.9-15.3 0-50.2-19.9-77.7-19.9C59.2 138.2 0 184.2 0 278.6c0 28 5.1 57 15.3 87 13.6 39.8 62.7 137.3 114 135.7 26.8-.7 45.7-19 80.5-19 33.8 0 51.3 19 80.5 19 51.7-.8 96.1-89.5 109-129.4-73.9-34.8-80.6-102.7-80.6-103.2zM261.2 95.2c27.7-32.9 25.2-62.8 24.4-73.2-24.4 1.4-52.7 16.6-68.8 35.3-17.7 20.3-28.1 45.5-25.9 73.5 26.3 2 50.5-11.4 70.3-35.6z"/></svg>macOS Apple</a>
+        <a class="download-link" href="./download.html#desktop-linux-x64"><img src="https://chatboxai.app/linux.svg" alt="Linux 64-bit" />Linux 64位</a>
+        <a class="download-link" href="./download.html#desktop-linux-arm64"><img src="https://chatboxai.app/linux.svg" alt="Linux ARM64" />Linux ARM64</a>
+        <a class="download-link" href="./download.html#desktop-win7"><svg class="windows-logo" viewBox="0 0 88 88" aria-hidden="true"><path d="M4 12.5 39 7v34H4Zm40 27.7h40V0L44 5.8ZM4 47h35v34L4 76Zm40 34 40-5.6V47H44Z"/></svg>Windows 7</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <h1>今天我能为你提供什么帮助？</h1>
+      <div class="search-wrap">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7" stroke="currentColor" fill="none" stroke-width="2"></circle><path d="m16.8 16.8 4.2 4.2" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg>
+        <input id="searchInput" type="search" placeholder="您想了解什么..." />
+        <button id="searchBtn" type="button">搜索</button>
+      </div>
+    </section>
+
+    <section class="topics">
+      <h2>热门话题</h2>
+      <div class="cards" id="topicCards">
+        <a class="card" data-title="如何使用您的许可证" href="https://chatboxai.app/zh/help-center/how-to-use-license" target="_blank" rel="noreferrer">
+          <span class="icon-sprite icon-s1"></span>
+          <p class="title">如何使用您的许可证</p>
+        </a>
+        <a class="card" data-title="常见服务问题" href="https://chatboxai.app/zh/help-center/chatbox-ai-service-faqs" target="_blank" rel="noreferrer">
+          <span class="icon-sprite icon-s2"></span>
+          <p class="title">常见服务问题</p>
+        </a>
+        <a class="card" data-title="键盘快捷键" href="https://chatboxai.app/zh/help-center/chatbox-keyboard-shortcuts" target="_blank" rel="noreferrer">
+          <span class="icon-sprite icon-s3"></span>
+          <p class="title">键盘快捷键</p>
+        </a>
+        <a class="card" data-title="开始使用" href="https://chatboxai.app/zh/guide" target="_blank" rel="noreferrer">
+          <span class="icon-sprite icon-s4"></span>
+          <p class="title">开始使用</p>
+        </a>
+        <a class="card" data-title="核心概念" href="https://chatboxai.app/zh/guide" target="_blank" rel="noreferrer">
+          <span class="icon-sprite icon-s5"></span>
+          <p class="title">核心概念</p>
+        </a>
+        <a class="card" data-title="套餐与价格" href="https://chatboxai.app/zh/guide" target="_blank" rel="noreferrer">
+          <span class="icon-sprite icon-s6"></span>
+          <p class="title">套餐与价格</p>
+        </a>
+        <a class="card" data-title="自带 API Key" href="https://chatboxai.app/zh/guide" target="_blank" rel="noreferrer">
+          <span class="icon-sprite icon-s7"></span>
+          <p class="title">自带 API Key</p>
+        </a>
+        <a class="card" data-title="常见错误及解决" href="https://chatboxai.app/zh/guide" target="_blank" rel="noreferrer">
+          <span class="icon-sprite icon-s8"></span>
+          <p class="title">常见错误及解决</p>
+        </a>
+        <a class="card" data-title="许可证管理" href="https://chatboxai.app/zh/guide" target="_blank" rel="noreferrer">
+          <span class="icon-sprite icon-s9"></span>
+          <p class="title">许可证管理</p>
+        </a>
+        <a class="card" data-title="Token计算方法" href="https://chatboxai.app/zh/guide" target="_blank" rel="noreferrer">
+          <span class="icon-sprite icon-s10"></span>
+          <p class="title">Token计算方法</p>
+        </a>
+      </div>
+      <div class="view-all-wrap">
+        <a class="view-all" href="./guide-redesign.html?topic=start"><span>查看全部</span><span>→</span></a>
+      </div>
+    </section>
+
+    <section class="updates">
+      <h2>更新日志</h2>
+      <div class="updates-panel">
+        <a class="update-card" href="https://chatboxai.app/zh/help-center/changelog" target="_blank" rel="noreferrer">
+          <img src="./assets/ref/nano2.png" alt="Nano Banana 2 更新" />
+          <p>图片生成工具支持 Nano Banana 2</p>
+        </a>
+        <a class="update-card" href="https://chatboxai.app/zh/help-center/changelog" target="_blank" rel="noreferrer">
+          <img src="./assets/ref/update-gemini-2.5-flash-image.png" alt="Gemini 2.5 Flash Image 更新" />
+          <p>支持Gemini-2.5-flash-image模型生图</p>
+        </a>
+        <a class="update-card" href="https://chatboxai.app/zh/help-center/changelog" target="_blank" rel="noreferrer">
+          <img src="./assets/ref/update-gemini-claude-api.png" alt="Gemini 与 Claude 更新" />
+          <p>自定义提供方增加Gemini和Claude风格的API</p>
+        </a>
+      </div>
+      <div class="view-all-wrap">
+        <a class="view-all" href="https://chatboxai.app/zh/help-center/changelog" target="_blank" rel="noreferrer"><span>查看全部</span><span>→</span></a>
+      </div>
+    </section>
+
+    <section class="contact-support">
+      <h2>没有找到您要查找的内容？</h2>
+      <p>您可以向我们的客服提交反馈以获得支持</p>
+      <a class="contact-btn" href="https://chatboxai.canny.io/" target="_blank" rel="noreferrer">联系我们</a>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-shell">
+      <div class="footer-top">
+        <div class="footer-brand-wrap">
+          <a class="footer-brand" href="./index-redesign.html">
+            <img class="logo-img" src="https://chatboxai.app/icon.png" alt="Chatbox logo" />
+            <span>Chatbox AI</span>
+          </a>
+        </div>
+        <div class="footer-cols">
+          <div class="footer-col">
+            <h4>友情链接</h4>
+            <a href="https://chathub.gg/" target="_blank" rel="noreferrer">ChatHub</a>
+            <a href="https://www.appinn.com/" target="_blank" rel="noreferrer">果核剥壳网</a>
+          </div>
+          <div class="footer-col">
+            <h4>资源</h4>
+            <a href="./help-center-redesign.html">用户指南</a>
+            <a href="./download.html">下载</a>
+            <a href="./pricing.html">定价</a>
+            <a href="./help-center-redesign.html">帮助</a>
+          </div>
+          <div class="footer-col">
+            <h4>关注我们</h4>
+            <a href="https://www.xiaohongshu.com/" target="_blank" rel="noreferrer">小红书</a>
+            <a href="https://github.com/chatboxai/chatbox" target="_blank" rel="noreferrer">GitHub</a>
+            <a href="https://x.com/" target="_blank" rel="noreferrer">X / Twitter</a>
+          </div>
+          <div class="footer-col">
+            <h4>关于</h4>
+            <a href="https://chatboxai.app/zh/privacy-policy" target="_blank" rel="noreferrer">隐私政策</a>
+            <a href="https://chatboxai.app/zh/terms" target="_blank" rel="noreferrer">条款</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-lang-row">
+        <div class="footer-lang">文A 中文</div>
+      </div>
+      <div class="footer-divider"></div>
+      <div class="footer-bottom">
+        <div>© 2026 Mediocre, LLC. All Rights Reserved.</div>
+        <div class="footer-icons">
+          <a href="https://x.com/" target="_blank" rel="noreferrer" aria-label="X">𝕏</a>
+          <a href="https://github.com/chatboxai/chatbox" target="_blank" rel="noreferrer" aria-label="GitHub">◉</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const topBar = document.querySelector(".top");
+    const downloadTrigger = document.getElementById("downloadTrigger");
+    const downloadPanel = document.getElementById("downloadPanel");
+    let lastScrollY = window.scrollY;
+    let downloadCloseTimer = null;
+    function openDownloadPanel() {
+      if (downloadCloseTimer) clearTimeout(downloadCloseTimer);
+      downloadPanel.classList.add("open");
+      topBar.classList.add("download-open");
+      downloadTrigger.setAttribute("aria-expanded", "true");
+    }
+    function scheduleCloseDownloadPanel() {
+      if (downloadCloseTimer) clearTimeout(downloadCloseTimer);
+      downloadCloseTimer = setTimeout(() => {
+        downloadPanel.classList.remove("open");
+        topBar.classList.remove("download-open");
+        downloadTrigger.setAttribute("aria-expanded", "false");
+      }, 300);
+    }
+    function closeDownloadPanel() {
+      downloadPanel.classList.remove("open");
+      topBar.classList.remove("download-open");
+      downloadTrigger.setAttribute("aria-expanded", "false");
+    }
+    downloadTrigger.addEventListener("mouseenter", openDownloadPanel);
+    downloadTrigger.addEventListener("mouseleave", scheduleCloseDownloadPanel);
+    downloadPanel.addEventListener("mouseenter", openDownloadPanel);
+    downloadPanel.addEventListener("mouseleave", scheduleCloseDownloadPanel);
+    document.addEventListener("click", (e) => {
+      if (!downloadPanel.contains(e.target) && !downloadTrigger.contains(e.target)) closeDownloadPanel();
+    });
+    document.addEventListener("keydown", (e) => { if (e.key === "Escape") closeDownloadPanel(); });
+    window.addEventListener("scroll", () => {
+      const y = window.scrollY;
+      if (downloadPanel.classList.contains("open")) {
+        topBar.classList.remove("hide");
+        lastScrollY = y;
+        return;
+      }
+      if (y > lastScrollY && y > 80) topBar.classList.add("hide");
+      else topBar.classList.remove("hide");
+      lastScrollY = y;
+    }, { passive: true });
+
+    const searchInput = document.getElementById("searchInput");
+    const searchBtn = document.getElementById("searchBtn");
+    const cards = Array.from(document.querySelectorAll(".card"));
+    function filterTopics() {
+      const q = searchInput.value.trim().toLowerCase();
+      cards.forEach((card) => {
+        const hit = !q || card.dataset.title.toLowerCase().includes(q);
+        card.classList.toggle("hidden", !hit);
+      });
+    }
+    searchBtn.addEventListener("click", filterTopics);
+    searchInput.addEventListener("keydown", (e) => { if (e.key === "Enter") filterTopics(); });
+  </script>
+</body>
+</html>
