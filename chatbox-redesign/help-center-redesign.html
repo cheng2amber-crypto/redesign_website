@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Chatbox AI 用户指南</title>
+  <title>Chatbox AI 帮助中心</title>
   <style>
     :root {
       --logo-accent: #eec174;
@@ -349,6 +349,71 @@
     }
     .footer-icons { display: flex; gap: 22px; font-size: 44px; }
 
+    @media (max-width: 1200px) {
+      .container { width: min(1080px, calc(100% - 28px)); }
+      .topics,
+      .updates,
+      .contact-support { margin-top: 58px; }
+      .cards { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+      .card {
+        min-height: 134px;
+        padding: 12px 10px;
+      }
+      .icon-sprite {
+        width: 60px;
+        height: 60px;
+      }
+      .updates-panel {
+        padding: 18px;
+        gap: 14px;
+      }
+      .update-card img { height: 150px; }
+      .update-card p {
+        padding: 10px 12px;
+        font-size: 13px;
+      }
+      .footer {
+        padding: 24px 0 14px;
+      }
+      .footer-top {
+        min-height: 210px;
+        gap: 18px;
+      }
+      .footer-brand {
+        font-size: 24px;
+      }
+      .footer-brand .logo-img {
+        width: 32px;
+        height: 32px;
+      }
+      .footer-cols {
+        gap: 24px;
+      }
+      .footer-col h4 {
+        margin-bottom: 10px;
+        font-size: 16px;
+      }
+      .footer-col a {
+        margin-bottom: 10px;
+        font-size: 14px;
+      }
+      .footer-lang-row {
+        margin-top: 16px;
+        margin-bottom: 18px;
+      }
+      .footer-lang {
+        font-size: 18px;
+        padding: 7px 14px;
+      }
+      .footer-bottom {
+        padding-top: 14px;
+        font-size: 15px;
+      }
+      .footer-icons {
+        gap: 14px;
+        font-size: 20px;
+      }
+    }
     @media (max-width: 1024px) {
       .cards { grid-template-columns: repeat(3, minmax(0, 1fr)); }
       .updates-panel { grid-template-columns: 1fr; }
@@ -365,10 +430,13 @@
       .contact-btn { font-size: 14px; padding: 7px 16px; }
       .footer-top { grid-template-columns: 1fr; min-height: auto; }
       .footer-cols { grid-template-columns: 1fr 1fr; }
-      .footer-brand { font-size: 34px; }
-      .footer-lang { font-size: 28px; }
-      .footer-bottom { font-size: 22px; }
-      .footer-icons { font-size: 28px; }
+      .footer-brand { font-size: 22px; }
+      .footer-brand .logo-img { width: 28px; height: 28px; }
+      .footer-col h4 { font-size: 15px; }
+      .footer-col a { font-size: 13px; }
+      .footer-lang { font-size: 16px; padding: 6px 12px; }
+      .footer-bottom { font-size: 13px; }
+      .footer-icons { font-size: 18px; gap: 12px; }
     }
   </style>
 </head>
@@ -383,7 +451,7 @@
         <a href="https://web.chatboxai.app" target="_blank" rel="noreferrer">开始对话</a>
         <button class="nav-link" id="downloadTrigger" type="button" aria-expanded="false">下载 <span>▾</span></button>
         <a href="./pricing.html">价格</a>
-        <a href="./help-center-redesign.html">用户指南</a>
+        <a href="./help-center-redesign.html">帮助中心</a>
         <button class="login-btn">登录</button>
       </nav>
     </div>
@@ -506,7 +574,7 @@
           </div>
           <div class="footer-col">
             <h4>资源</h4>
-            <a href="./help-center-redesign.html">用户指南</a>
+            <a href="./help-center-redesign.html">帮助中心</a>
             <a href="./download.html">下载</a>
             <a href="./pricing.html">定价</a>
             <a href="./help-center-redesign.html">帮助</a>
