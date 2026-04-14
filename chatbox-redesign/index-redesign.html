@@ -308,6 +308,14 @@
       border: 0; border-radius: 12px; background: transparent;
       padding: 10px 0;
     }
+    .metric-link {
+      display: block;
+      text-decoration: none;
+    }
+    .metric-link:hover .num,
+    .metric-link:hover .label {
+      color: #111827;
+    }
     .metric-item .num {
       display: block; font-size: 32px; font-weight: 820; line-height: 1; letter-spacing: -.02em;
       color: #111827; margin-bottom: 4px;
@@ -316,7 +324,7 @@
       display: block; font-size: 12px; color: #6b7280; line-height: 1.2;
     }
     .github-label { display: inline-flex; align-items: center; gap: 6px; }
-    .github-mark { width: 14px; height: 14px; object-fit: contain; filter: grayscale(1) contrast(1.1); }
+    .github-mark { height: 1em; width: auto; object-fit: contain; }
     .map-wrap {
       position: relative; min-height: 620px; border: 0;
       border-radius: 14px; background: transparent; overflow: hidden;
@@ -814,7 +822,10 @@
           <div class="review-metrics">
             <div class="metric-copy">
               <div class="metric-item"><span class="num">全球</span><span class="label">用户持续好评</span></div>
-              <div class="metric-item"><span class="num">39,000+</span><span class="label github-label">GitHub Stars <img class="github-mark" src="https://github.githubassets.com/favicons/favicon-dark.svg" alt="GitHub" /></span></div>
+              <a class="metric-item metric-link" href="https://github.com/chatboxai/chatbox" target="_blank" rel="noreferrer">
+                <span class="num">39,000+</span>
+                <span class="label github-label">GitHub Stars <img class="github-mark" src="./assets/ref/github-logo.png" alt="GitHub Stars" /></span>
+              </a>
               <div class="metric-item"><span class="num">4.8/5</span><span class="label">Featured on Product Hunt</span></div>
               <div class="metric-item"><span class="num">254%</span><span class="label">用户增长率</span></div>
             </div>
