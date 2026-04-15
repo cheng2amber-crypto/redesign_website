@@ -569,6 +569,9 @@
       versionLinks.forEach((link) => link.classList.toggle("active", hash === new URL(link.href).hash));
     }
 
+    downloadTrigger.addEventListener("click", () => {
+      window.location.href = "../../../download.html";
+    });
     downloadTrigger.addEventListener("mouseenter", openDownloadPanel);
     downloadTrigger.addEventListener("mouseleave", scheduleCloseDownloadPanel);
     downloadPanel.addEventListener("mouseenter", openDownloadPanel);

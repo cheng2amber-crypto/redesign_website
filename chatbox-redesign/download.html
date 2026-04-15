@@ -3,146 +3,223 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Chatbox AI 下载</title>
+  <title>下载 Chatbox AI</title>
   <style>
     :root {
-      --bg: #f8f9fa;
-      --text: #111827;
+      --brand: #e8956a;
+      --gold: #eec174;
+      --ink: #111827;
       --muted: #6b7280;
       --line: #e5e7eb;
+      --card: #ffffff;
+      --soft: #f3f4f6;
       --dark: #1f2937;
-      --card: #fff;
       --apple-font: "SF Pro Display", "SF Pro Text", -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", "Helvetica Neue", Arial, sans-serif;
     }
     * { box-sizing: border-box; }
     body {
       margin: 0;
       font-family: var(--apple-font);
-      background: var(--bg);
-      color: var(--text);
+      color: var(--ink);
+      background: #fff;
     }
     a { color: inherit; text-decoration: none; }
-    .container { width: min(1120px, calc(100% - 32px)); margin: 0 auto; }
+    .container { width: min(1220px, calc(100% - 24px)); margin: 0 auto; }
+
     .top {
-      position: sticky; top: 0; z-index: 30;
-      backdrop-filter: none;
+      position: sticky;
+      top: 0;
+      z-index: 30;
       background: #fff;
       border-bottom: 1px solid var(--line);
       transition: transform .25s ease;
     }
     .top.hidden { transform: translateY(-100%); }
     .top-inner {
-      height: 72px; display: flex; align-items: center; justify-content: space-between; gap: 16px;
+      height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
     }
     .brand {
-      display: inline-flex; align-items: center; gap: 10px; font-weight: 700;
-      color: inherit; text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 700;
     }
     .logo-img {
-      width: 34px; height: 34px; border-radius: 8px; border: 1px solid #f2f2f2;
-      object-fit: cover; background: #fff;
-    }
-    .nav { display: flex; align-items: center; gap: 16px; color: #1f2937; }
-    .nav a, .nav .nav-link {
-      font-size: 14px; font-weight: 600; color: inherit; text-decoration: none;
-    }
-    .nav a:hover, .nav .nav-link:hover { color: #eec174; }
-    .nav .nav-link {
-      border: 0; background: transparent; padding: 0; cursor: pointer;
-      display: inline-flex; align-items: center; gap: 6px; font-family: inherit;
-    }
-    .download-panel {
-      display: none;
-      border-top: 0;
+      width: 34px;
+      height: 34px;
+      border-radius: 8px;
+      border: 1px solid #f2f2f2;
+      object-fit: cover;
       background: #fff;
-      backdrop-filter: blur(12px);
     }
-    .download-panel.open { display: block; }
-    .top.download-open { border-bottom-color: transparent; }
-    .download-panel-inner {
-      display: flex; align-items: center; gap: 10px; min-height: auto;
-      flex-wrap: wrap; padding: 10px 0;
+    .nav {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      color: #1f2937;
     }
-    .download-link {
-      position: relative;
-      width: 96px; border-radius: 12px; border: 0; background: transparent;
-      padding: 8px 6px; text-align: center; font-size: 11.5px; color: #1f2937;
-      display: inline-flex; flex-direction: column; align-items: center; gap: 6px; font-weight: 600;
+    .nav a {
+      font-size: 14px;
+      font-weight: 600;
+      color: inherit;
+    }
+    .nav a:hover,
+    .nav a.active { color: var(--gold); }
+    .login-btn {
+      background: var(--dark);
+      color: #fff;
+      border: 0;
+      border-radius: 10px;
+      padding: 9px 14px;
+      font-weight: 700;
+      cursor: pointer;
+      font-family: inherit;
+    }
+    .login-btn:hover { background: #131a25; }
+
+    main { padding: 34px 0 58px; }
+    .head {
+      text-align: center;
+      margin-bottom: 24px;
+    }
+    .head h1 {
+      margin: 0 0 10px;
+      font-size: clamp(28px, 4.5vw, 48px);
+      line-height: 1.1;
+    }
+    .head p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.7;
+    }
+    .stack {
+      display: grid;
+      gap: 18px;
+    }
+    .section {
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: var(--card);
+      overflow: hidden;
+    }
+    .section-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.12fr;
+      gap: 0;
+      align-items: stretch;
+    }
+    .media {
+      min-height: 320px;
+      background: #f8fafc;
+      border-right: 1px solid var(--line);
+    }
+    .media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .content {
+      padding: 26px;
+    }
+    .content h2 {
+      margin: 0 0 10px;
+      font-size: clamp(25px, 3vw, 34px);
       line-height: 1.2;
     }
-    .download-link img {
-      width: 26px; height: 26px; object-fit: contain; filter: grayscale(1);
+    .content p {
+      margin: 0 0 16px;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.75;
     }
-    .download-link .windows-logo {
-      width: 26px; height: 26px; display: block; fill: #000;
+    .btn-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
     }
-    .download-link .apple-logo {
-      width: 26px; height: 26px; display: block; fill: #000;
-    }
-    .qr-pop {
-      position: absolute;
-      left: 50%;
-      top: calc(100% + 10px);
-      transform: translateX(-50%) translateY(6px);
-      width: 146px;
-      padding: 10px;
-      border-radius: 16px;
+    .btn {
+      border-radius: 12px;
+      border: 1px solid #d1d5db;
       background: #fff;
-      border: 1px solid #e5e7eb;
-      box-shadow: 0 18px 36px rgba(17,24,39,.16);
-      opacity: 0;
-      visibility: hidden;
-      pointer-events: none;
-      transition: opacity .18s ease, transform .18s ease, visibility .18s ease;
-      z-index: 80;
+      color: #1f2937;
+      padding: 11px 14px;
+      font-size: 14px;
+      font-weight: 700;
+      min-height: 46px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: all .2s ease;
     }
-    .qr-pop img {
-      width: 124px; height: 124px; display: block; object-fit: contain; filter: none; margin: 0 auto;
+    .btn:hover {
+      border-color: #9ca3af;
+      transform: translateY(-1px);
+      box-shadow: 0 8px 16px rgba(17,24,39,.08);
     }
-    .qr-link:hover .qr-pop,
-    .qr-link:focus-visible .qr-pop {
-      opacity: 1; visibility: visible; transform: translateX(-50%) translateY(0);
+    .btn.primary {
+      border-color: transparent;
+      background: #1f2937;
+      color: #fff;
     }
-    .chip {
-      border: 1px solid var(--line); background: #fff; border-radius: 10px;
-      padding: 9px 12px; font-size: 13px; cursor: pointer;
+    .btn.primary:hover { background: #111827; }
+
+    .desktop-list {
+      display: grid;
+      gap: 10px;
+      margin-top: 4px;
     }
-    .login-btn {
-      background: #1f2937; color: #fff; border: 0; border-radius: 10px;
-      padding: 9px 14px; font-weight: 700; cursor: pointer;
+    .desktop-item {
+      background: #f3f4f7;
+      border-radius: 14px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
     }
-    main { padding: 34px 0 44px; }
-    h1 { margin: 0 0 8px; font-size: clamp(28px, 4vw, 42px); }
-    .sub { margin: 0 0 16px; color: var(--muted); line-height: 1.7; }
-    .hero {
-      display: grid; grid-template-columns: 1.1fr .9fr; gap: 14px;
-      border: 1px solid var(--line); border-radius: 16px; background: #fff; padding: 14px;
-      margin-bottom: 14px;
+    .desktop-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 0;
     }
-    .device-shot {
-      position: relative; border: 1px solid #ececec; border-radius: 12px; padding: 8px; background: #fff;
+    .desktop-left img,
+    .desktop-left svg {
+      width: 50px;
+      height: 50px;
+      object-fit: contain;
+      display: block;
+      fill: #000;
+      flex: none;
     }
-    .device-shot > img { width: 100%; border-radius: 8px; display: block; }
-    .mini {
-      position: absolute; right: -8px; bottom: -14px; width: 32%;
-      border: 5px solid #111827; border-radius: 14px; background: #111827;
-      box-shadow: 0 12px 20px rgba(17,24,39,.2);
+    .desktop-name {
+      font-size: 27px;
+      font-weight: 760;
+      line-height: 1.05;
+      letter-spacing: -.01em;
+      color: #1f2937;
     }
-    .download-grid {
-      display: grid; gap: 10px; grid-template-columns: repeat(4, minmax(0,1fr));
+    .desktop-sub {
+      font-size: 16px;
+      line-height: 1.2;
+      color: #6b7280;
+      margin-top: 3px;
     }
-    .item {
-      border: 1px solid var(--line); border-radius: 12px; background: #fff;
-      text-align: center; padding: 14px 10px; text-decoration: none; color: #111827;
-      filter: grayscale(1);
+    .desktop-actions {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
     }
-    .item:hover { filter: grayscale(.2); border-color: #d1d5db; }
-    .item img { width: 20px; height: 20px; object-fit: contain; margin-bottom: 8px; }
-    .item strong { display: block; font-size: 14px; margin-bottom: 4px; }
-    .item span { display: block; color: var(--muted); font-size: 12px; }
 
     .footer {
-      margin-top: 24px;
       background: #1f2b40;
       color: #c9d0dc;
       border-top: 0;
@@ -170,15 +247,29 @@
       color: #eef2f7;
       margin-top: 2px;
     }
-    .footer-brand .logo-img { width: 34px; height: 34px; border-radius: 10px; }
+    .footer-brand .logo-img {
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
+    }
     .footer-cols {
       display: grid;
       grid-template-columns: repeat(4, minmax(130px, 1fr));
       gap: 26px;
       padding-top: 4px;
     }
-    .footer-col h4 { margin: 0 0 12px; font-size: 16px; color: #eef2f7; font-weight: 700; }
-    .footer-col a { display: block; color: #b4bfce; margin: 0 0 10px; font-size: 14px; }
+    .footer-col h4 {
+      margin: 0 0 12px;
+      font-size: 16px;
+      color: #eef2f7;
+      font-weight: 700;
+    }
+    .footer-col a {
+      display: block;
+      color: #b4bfce;
+      margin: 0 0 10px;
+      font-size: 14px;
+    }
     .footer-lang-row {
       display: flex;
       justify-content: center;
@@ -208,11 +299,27 @@
       font-size: 14px;
       line-height: 1.2;
     }
-    .footer-icons { display: flex; gap: 14px; font-size: 18px; }
+    .footer-icons {
+      display: flex;
+      gap: 14px;
+      font-size: 18px;
+    }
+
+    @media (max-width: 1024px) {
+      .section-grid { grid-template-columns: 1fr; }
+      .media {
+        min-height: 240px;
+        border-right: 0;
+        border-bottom: 1px solid var(--line);
+      }
+      .desktop-name { font-size: 24px; }
+      .desktop-sub { font-size: 15px; }
+    }
     @media (max-width: 900px) {
-      .hero { grid-template-columns: 1fr; }
-      .download-grid { grid-template-columns: repeat(2, minmax(0,1fr)); }
       .nav { display: none; }
+      .content { padding: 18px; }
+      .desktop-item { flex-direction: column; align-items: flex-start; }
+      .desktop-actions { width: 100%; justify-content: flex-start; }
       .footer-top { grid-template-columns: 1fr; min-height: auto; }
       .footer-cols { grid-template-columns: 1fr 1fr; }
       .footer-brand { font-size: 20px; }
@@ -234,55 +341,122 @@
       </a>
       <nav class="nav">
         <a href="https://web.chatboxai.app" target="_blank" rel="noreferrer">开始对话</a>
-        <button class="nav-link" id="downloadTrigger" type="button" aria-expanded="false">下载 <span>▾</span></button>
+        <a class="active" href="./download.html">下载</a>
         <a href="./pricing.html">价格</a>
         <a href="./help-center-redesign.html">帮助中心</a>
         <button class="login-btn">登录</button>
-        <button class="chip">中文 / EN</button>
       </nav>
     </div>
-    <div class="download-panel" id="downloadPanel">
-      <div class="container download-panel-inner">
-        <a class="download-link qr-link" href="https://apps.apple.com/app/chatbox-ai/id6471368056" target="_blank" rel="noreferrer"><img src="https://chatboxai.app/app-store.png" alt="iOS" />iOS<span class="qr-pop"><img src="./assets/ref/qr-ios.jpeg" alt="iOS 下载二维码" /></span></a>
-        <a class="download-link qr-link" href="https://chatboxai.app/install?download=android_apk" target="_blank" rel="noreferrer"><img src="https://chatboxai.app/android.svg" alt="Android APK" />Android<span class="qr-pop"><img src="./assets/ref/qr-android.png" alt="Android 下载二维码" /></span></a>
-        <a class="download-link qr-link" href="https://play.google.com/store/apps/details?id=xyz.chatboxapp.chatbox" target="_blank" rel="noreferrer"><img src="https://chatboxai.app/google_play.svg" alt="Google Play" />Google Play<span class="qr-pop"><img src="./assets/ref/qr-google-play.jpeg" alt="Google Play 下载二维码" /></span></a>
-        <a class="download-link" href="https://chatboxai.app/zh/install?download=win64" target="_blank" rel="noreferrer"><svg class="windows-logo" viewBox="0 0 88 88" aria-hidden="true"><path d="M4 12.5 39 7v34H4Zm40 27.7h40V0L44 5.8ZM4 47h35v34L4 76Zm40 34 40-5.6V47H44Z"/></svg>Windows 64位</a>
-        <a class="download-link" href="https://chatboxai.app/zh/install?download=darwin-x86_64" target="_blank" rel="noreferrer"><svg class="apple-logo" viewBox="0 0 384 512" aria-hidden="true"><path d="M318.7 268.7c-.2-37.5 16.6-65.8 50.8-86.8-19.1-27.2-47.9-42.1-86.2-45.3-36.1-3.1-75.6 20.9-90.1 20.9-15.3 0-50.2-19.9-77.7-19.9C59.2 138.2 0 184.2 0 278.6c0 28 5.1 57 15.3 87 13.6 39.8 62.7 137.3 114 135.7 26.8-.7 45.7-19 80.5-19 33.8 0 51.3 19 80.5 19 51.7-.8 96.1-89.5 109-129.4-73.9-34.8-80.6-102.7-80.6-103.2zM261.2 95.2c27.7-32.9 25.2-62.8 24.4-73.2-24.4 1.4-52.7 16.6-68.8 35.3-17.7 20.3-28.1 45.5-25.9 73.5 26.3 2 50.5-11.4 70.3-35.6z"/></svg>macOS 英特尔</a>
-        <a class="download-link" href="https://chatboxai.app/zh/install?download=darwin-aarch64" target="_blank" rel="noreferrer"><svg class="apple-logo" viewBox="0 0 384 512" aria-hidden="true"><path d="M318.7 268.7c-.2-37.5 16.6-65.8 50.8-86.8-19.1-27.2-47.9-42.1-86.2-45.3-36.1-3.1-75.6 20.9-90.1 20.9-15.3 0-50.2-19.9-77.7-19.9C59.2 138.2 0 184.2 0 278.6c0 28 5.1 57 15.3 87 13.6 39.8 62.7 137.3 114 135.7 26.8-.7 45.7-19 80.5-19 33.8 0 51.3 19 80.5 19 51.7-.8 96.1-89.5 109-129.4-73.9-34.8-80.6-102.7-80.6-103.2zM261.2 95.2c27.7-32.9 25.2-62.8 24.4-73.2-24.4 1.4-52.7 16.6-68.8 35.3-17.7 20.3-28.1 45.5-25.9 73.5 26.3 2 50.5-11.4 70.3-35.6z"/></svg>macOS Apple 芯片</a>
-        <a class="download-link" href="https://chatboxai.app/zh/install?download=linux" target="_blank" rel="noreferrer"><img src="https://chatboxai.app/linux.svg" alt="Linux 64-bit" />Linux 64位</a>
-        <a class="download-link" href="https://chatboxai.app/zh/install?download=linux-arm64" target="_blank" rel="noreferrer"><img src="https://chatboxai.app/linux.svg" alt="Linux ARM64" />Linux ARM64</a>
-        <a class="download-link" href="https://chatboxai.app/zh/install?download=win7" target="_blank" rel="noreferrer"><svg class="windows-logo" viewBox="0 0 88 88" aria-hidden="true"><path d="M4 12.5 39 7v34H4Zm40 27.7h40V0L44 5.8ZM4 47h35v34L4 76Zm40 34 40-5.6V47H44Z"/></svg>Windows 7 兼容版</a>
+  </header>
+
+  <main>
+    <div class="container">
+      <div class="head">
+        <h1>下载 Chatbox AI</h1>
+        <p>按设备快速安装：移动端、桌面端、网页版一次到位。</p>
+      </div>
+
+      <div class="stack">
+        <section class="section">
+          <div class="section-grid">
+            <div class="media">
+              <img src="https://images.unsplash.com/photo-1512499617640-c74ae3a79d37?auto=format&fit=crop&w=1400&q=80" alt="移动端应用" />
+            </div>
+            <div class="content">
+              <h2>移动版应用</h2>
+              <p>适合随时处理消息、快速查看历史记录与临时提问，支持 iOS、Android 与 Google Play 三种入口。</p>
+              <div class="btn-row">
+                <a class="btn primary" href="https://apps.apple.com/us/app/chatbox-powerful-ai-client/id6471368056" target="_blank" rel="noreferrer">下载 iOS 版本</a>
+                <a class="btn" href="https://chatboxai.app/zh/install?download=android_apk" target="_blank" rel="noreferrer">下载 Android 版本</a>
+                <a class="btn" href="https://play.google.com/store/apps/details?id=xyz.chatboxapp.chatbox" target="_blank" rel="noreferrer">下载 Google Play 版本</a>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="section-grid">
+            <div class="media">
+              <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1400&q=80" alt="桌面端应用" />
+            </div>
+            <div class="content">
+              <h2>桌面版应用</h2>
+              <p>参考你给的布局，保留完整的 6 个桌面入口：Windows、macOS 双芯片、Linux 双架构与 Windows 7 兼容版。</p>
+              <div class="desktop-list">
+                <article class="desktop-item">
+                  <div class="desktop-left">
+                    <svg viewBox="0 0 88 88" aria-hidden="true"><path d="M4 12.5 39 7v34H4Zm40 27.7h40V0L44 5.8ZM4 47h35v34L4 76Zm40 34 40-5.6V47H44Z"/></svg>
+                    <div>
+                      <div class="desktop-name">Windows</div>
+                      <div class="desktop-sub">64位</div>
+                    </div>
+                  </div>
+                  <div class="desktop-actions">
+                    <a class="btn" href="https://chatboxai.app/zh/install?download=win64" target="_blank" rel="noreferrer">下载</a>
+                  </div>
+                </article>
+
+                <article class="desktop-item">
+                  <div class="desktop-left">
+                    <svg viewBox="0 0 384 512" aria-hidden="true"><path d="M318.7 268.7c-.2-37.5 16.6-65.8 50.8-86.8-19.1-27.2-47.9-42.1-86.2-45.3-36.1-3.1-75.6 20.9-90.1 20.9-15.3 0-50.2-19.9-77.7-19.9C59.2 138.2 0 184.2 0 278.6c0 28 5.1 57 15.3 87 13.6 39.8 62.7 137.3 114 135.7 26.8-.7 45.7-19 80.5-19 33.8 0 51.3 19 80.5 19 51.7-.8 96.1-89.5 109-129.4-73.9-34.8-80.6-102.7-80.6-103.2zM261.2 95.2c27.7-32.9 25.2-62.8 24.4-73.2-24.4 1.4-52.7 16.6-68.8 35.3-17.7 20.3-28.1 45.5-25.9 73.5 26.3 2 50.5-11.4 70.3-35.6z"/></svg>
+                    <div>
+                      <div class="desktop-name">macOS</div>
+                    </div>
+                  </div>
+                  <div class="desktop-actions">
+                    <a class="btn" href="https://chatboxai.app/zh/install?download=darwin-x86_64" target="_blank" rel="noreferrer">英特尔</a>
+                    <a class="btn" href="https://chatboxai.app/zh/install?download=darwin-aarch64" target="_blank" rel="noreferrer">Apple 芯片</a>
+                  </div>
+                </article>
+
+                <article class="desktop-item">
+                  <div class="desktop-left">
+                    <img src="https://chatboxai.app/linux.svg" alt="Linux" />
+                    <div>
+                      <div class="desktop-name">Linux</div>
+                    </div>
+                  </div>
+                  <div class="desktop-actions">
+                    <a class="btn" href="https://chatboxai.app/zh/install?download=linux" target="_blank" rel="noreferrer">64位</a>
+                    <a class="btn" href="https://chatboxai.app/zh/install?download=linux-arm64" target="_blank" rel="noreferrer">ARM64</a>
+                  </div>
+                </article>
+
+                <article class="desktop-item">
+                  <div class="desktop-left">
+                    <svg viewBox="0 0 88 88" aria-hidden="true"><path d="M4 12.5 39 7v34H4Zm40 27.7h40V0L44 5.8ZM4 47h35v34L4 76Zm40 34 40-5.6V47H44Z"/></svg>
+                    <div>
+                      <div class="desktop-name">Windows 7 兼容版</div>
+                      <div class="desktop-sub">兼容 Win7 v1.11.8 版本</div>
+                    </div>
+                  </div>
+                  <div class="desktop-actions">
+                    <a class="btn" href="https://chatboxai.app/zh/install?download=win7" target="_blank" rel="noreferrer">下载</a>
+                  </div>
+                </article>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="section-grid">
+            <div class="media">
+              <img src="https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?auto=format&fit=crop&w=1400&q=80" alt="网页版应用" />
+            </div>
+            <div class="content">
+              <h2>网页版应用</h2>
+              <p>无需安装，打开浏览器即可开始使用，适合临时设备、外部电脑或快速协作场景。</p>
+              <div class="btn-row">
+                <a class="btn primary" href="https://web.chatboxai.app/" target="_blank" rel="noreferrer">启动网页版应用</a>
+              </div>
+            </div>
+          </div>
+        </section>
       </div>
     </div>
-  </header>
-  <main class="container">
-    <h1>快速下载</h1>
-    <p class="sub">选择你的平台，一键下载。页面仅保留核心下载入口：iOS、Android APK、Google Play、Windows。</p>
-    <section class="hero">
-      <div class="device-shot">
-        <img src="https://download.chatboxai.app/static/snapshot_desktop.jpeg" alt="Desktop">
-        <img class="mini" src="https://download.chatboxai.app/static/snapshot_phone.jpeg" alt="Phone">
-      </div>
-      <div>
-        <h3 style="margin:2px 0 10px;">手机 + 桌面，多端联动</h3>
-        <p class="sub" style="margin-bottom:0;">同一账户可在移动端与桌面端切换使用。你也可以先下载桌面端，再扫码安装移动端。</p>
-      </div>
-    </section>
-    <section class="download-grid">
-      <a class="item" href="https://apps.apple.com/app/chatbox-ai/id6471368056" target="_blank" rel="noreferrer">
-        <img src="https://chatboxai.app/app-store.png" alt="iOS"><strong>iOS</strong><span>App Store</span>
-      </a>
-      <a class="item" href="https://chatboxai.app/install?download=android_apk" target="_blank" rel="noreferrer">
-        <img src="https://chatboxai.app/android.svg" alt="Android APK"><strong>Android APK</strong><span>直接下载</span>
-      </a>
-      <a class="item" href="https://play.google.com/store/apps/details?id=xyz.chatboxapp.chatbox" target="_blank" rel="noreferrer">
-        <img src="https://chatboxai.app/google_play.svg" alt="Google Play"><strong>Google Play</strong><span>商店安装</span>
-      </a>
-      <a class="item" href="https://chatboxai.app/zh/" target="_blank" rel="noreferrer">
-        <img src="https://chatboxai.app/download.svg" alt="Windows"><strong>Windows</strong><span>桌面客户端下载</span>
-      </a>
-    </section>
   </main>
+
   <footer class="footer">
     <div class="footer-shell">
       <div class="footer-top">
@@ -331,46 +505,12 @@
       </div>
     </div>
   </footer>
+
   <script>
     const topBar = document.querySelector(".top");
-    const downloadTrigger = document.getElementById("downloadTrigger");
-    const downloadPanel = document.getElementById("downloadPanel");
     let lastScrollY = window.scrollY;
-    let downloadCloseTimer = null;
-    function openDownloadPanel() {
-      if (downloadCloseTimer) clearTimeout(downloadCloseTimer);
-      downloadPanel.classList.add("open");
-      topBar.classList.add("download-open");
-      downloadTrigger.setAttribute("aria-expanded", "true");
-    }
-    function scheduleCloseDownloadPanel() {
-      if (downloadCloseTimer) clearTimeout(downloadCloseTimer);
-      downloadCloseTimer = setTimeout(() => {
-        downloadPanel.classList.remove("open");
-        topBar.classList.remove("download-open");
-        downloadTrigger.setAttribute("aria-expanded", "false");
-      }, 300);
-    }
-    function closeDownloadPanel() {
-      downloadPanel.classList.remove("open");
-      topBar.classList.remove("download-open");
-      downloadTrigger.setAttribute("aria-expanded", "false");
-    }
-    downloadTrigger.addEventListener("mouseenter", openDownloadPanel);
-    downloadTrigger.addEventListener("mouseleave", scheduleCloseDownloadPanel);
-    downloadPanel.addEventListener("mouseenter", openDownloadPanel);
-    downloadPanel.addEventListener("mouseleave", scheduleCloseDownloadPanel);
-    document.addEventListener("click", (e) => {
-      if (!downloadPanel.contains(e.target) && !downloadTrigger.contains(e.target)) closeDownloadPanel();
-    });
-    document.addEventListener("keydown", (e) => { if (e.key === "Escape") closeDownloadPanel(); });
     window.addEventListener("scroll", () => {
       const y = window.scrollY;
-      if (downloadPanel.classList.contains("open")) {
-        topBar.classList.remove("hidden");
-        lastScrollY = y;
-        return;
-      }
       if (y > lastScrollY && y > 80) topBar.classList.add("hidden");
       else topBar.classList.remove("hidden");
       lastScrollY = y;

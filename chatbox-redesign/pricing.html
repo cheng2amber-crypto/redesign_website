@@ -964,6 +964,9 @@
       topBar.classList.remove("download-open");
       downloadTrigger.setAttribute("aria-expanded", "false");
     }
+    downloadTrigger.addEventListener("click", () => {
+      window.location.href = "./download.html";
+    });
     downloadTrigger.addEventListener("mouseenter", openDownloadPanel);
     downloadTrigger.addEventListener("mouseleave", scheduleCloseDownloadPanel);
     downloadPanel.addEventListener("mouseenter", openDownloadPanel);
