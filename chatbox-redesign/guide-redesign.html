@@ -205,6 +205,14 @@
       line-height: 1.7;
     }
     .tips li { margin-bottom: 5px; }
+    .tips li strong { color: #111827; }
+    .tips .inline-link {
+      color: #c88428;
+      font-weight: 700;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+    .tips .inline-link:hover { color: #a96b17; }
     .match-banner {
       display: none;
       margin: 0 0 14px;
@@ -337,13 +345,8 @@
       <div class="container download-panel-inner">
         <a class="download-link qr-link" href="https://apps.apple.com/app/chatbox-ai/id6471368056" target="_blank" rel="noreferrer"><img src="https://chatboxai.app/app-store.png" alt="iOS" />iOS<span class="qr-pop"><img src="./assets/ref/qr-ios.jpeg" alt="iOS 下载二维码" /></span></a>
         <a class="download-link qr-link" href="https://chatboxai.app/install?download=android_apk" target="_blank" rel="noreferrer"><img src="https://chatboxai.app/android.svg" alt="Android APK" />Android<span class="qr-pop"><img src="./assets/ref/qr-android.png" alt="Android 下载二维码" /></span></a>
-        <a class="download-link qr-link" href="https://play.google.com/store/apps/details?id=xyz.chatboxapp.chatbox" target="_blank" rel="noreferrer"><img src="https://chatboxai.app/google_play.svg" alt="Google Play" />Google Play<span class="qr-pop"><img src="./assets/ref/qr-google-play.jpeg" alt="Google Play 下载二维码" /></span></a>
         <a class="download-link" href="https://chatboxai.app/zh/install?download=win64" target="_blank" rel="noreferrer"><svg class="windows-logo" viewBox="0 0 88 88" aria-hidden="true"><path d="M4 12.5 39 7v34H4Zm40 27.7h40V0L44 5.8ZM4 47h35v34L4 76Zm40 34 40-5.6V47H44Z"/></svg>Windows 64位</a>
-        <a class="download-link" href="https://chatboxai.app/zh/install?download=darwin-x86_64" target="_blank" rel="noreferrer"><svg class="apple-logo" viewBox="0 0 384 512" aria-hidden="true"><path d="M318.7 268.7c-.2-37.5 16.6-65.8 50.8-86.8-19.1-27.2-47.9-42.1-86.2-45.3-36.1-3.1-75.6 20.9-90.1 20.9-15.3 0-50.2-19.9-77.7-19.9C59.2 138.2 0 184.2 0 278.6c0 28 5.1 57 15.3 87 13.6 39.8 62.7 137.3 114 135.7 26.8-.7 45.7-19 80.5-19 33.8 0 51.3 19 80.5 19 51.7-.8 96.1-89.5 109-129.4-73.9-34.8-80.6-102.7-80.6-103.2zM261.2 95.2c27.7-32.9 25.2-62.8 24.4-73.2-24.4 1.4-52.7 16.6-68.8 35.3-17.7 20.3-28.1 45.5-25.9 73.5 26.3 2 50.5-11.4 70.3-35.6z"/></svg>macOS 英特尔</a>
         <a class="download-link" href="https://chatboxai.app/zh/install?download=darwin-aarch64" target="_blank" rel="noreferrer"><svg class="apple-logo" viewBox="0 0 384 512" aria-hidden="true"><path d="M318.7 268.7c-.2-37.5 16.6-65.8 50.8-86.8-19.1-27.2-47.9-42.1-86.2-45.3-36.1-3.1-75.6 20.9-90.1 20.9-15.3 0-50.2-19.9-77.7-19.9C59.2 138.2 0 184.2 0 278.6c0 28 5.1 57 15.3 87 13.6 39.8 62.7 137.3 114 135.7 26.8-.7 45.7-19 80.5-19 33.8 0 51.3 19 80.5 19 51.7-.8 96.1-89.5 109-129.4-73.9-34.8-80.6-102.7-80.6-103.2zM261.2 95.2c27.7-32.9 25.2-62.8 24.4-73.2-24.4 1.4-52.7 16.6-68.8 35.3-17.7 20.3-28.1 45.5-25.9 73.5 26.3 2 50.5-11.4 70.3-35.6z"/></svg>macOS Apple 芯片</a>
-        <a class="download-link" href="https://chatboxai.app/zh/install?download=linux" target="_blank" rel="noreferrer"><img src="https://chatboxai.app/linux.svg" alt="Linux 64-bit" />Linux 64位</a>
-        <a class="download-link" href="https://chatboxai.app/zh/install?download=linux-arm64" target="_blank" rel="noreferrer"><img src="https://chatboxai.app/linux.svg" alt="Linux ARM64" />Linux ARM64</a>
-        <a class="download-link" href="https://chatboxai.app/zh/install?download=win7" target="_blank" rel="noreferrer"><svg class="windows-logo" viewBox="0 0 88 88" aria-hidden="true"><path d="M4 12.5 39 7v34H4Zm40 27.7h40V0L44 5.8ZM4 47h35v34L4 76Zm40 34 40-5.6V47H44Z"/></svg>Windows 7 兼容版</a>
       </div>
     </div>
   </header>
@@ -538,9 +541,12 @@
       },
       "billing": {
         title: "账单与订阅",
-        intro: "账单与订阅页集中展示支付状态、续费情况、订阅周期与历史消费记录。",
-        subTitle: "建议核对",
-        points: ["当前订阅是否生效", "账单金额与扣费周期", "支付方式与历史订单记录"]
+        intro: "退款政策",
+        subTitle: "退款与申请说明",
+        points: [
+          "<strong>退款条件</strong><br>- 购买后 7天内可申请退款<br>- 需未大量使用服务，已使用计算点数低于 ____ 个<br>- 每个账户仅限一次退款<br>- 退款金额将扣除 Stripe 平台手续费及已使用的计算点数对应价值<br>- 7天后无论任何情况均不予退款",
+          "<strong>如何申请退款</strong><br>1. 联系客服支持<br>2. 提供订单信息和退款原因<br>3. 审核通过后处理退款<br>4. 退款将原路返回<br>5. 我们会尽快安排退款，想要退款，<a class=\"inline-link\" href=\"./refund-contact.html\">点击这里</a>"
+        ]
       },
       "api-key": {
         title: "OpenAI",

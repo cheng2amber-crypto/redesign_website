@@ -1,0 +1,311 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>联系我们 - 退款申请</title>
+  <style>
+    :root {
+      --bg: #f4f5f8;
+      --card: #ffffff;
+      --line: #e5e7eb;
+      --muted: #6b7280;
+      --text: #111827;
+      --danger: #e2554a;
+      --btn: #1f2937;
+      --btn-hover: #111827;
+      --apple-font: "SF Pro Display", "SF Pro Text", -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", "Helvetica Neue", Arial, sans-serif;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      font-family: var(--apple-font);
+      color: var(--text);
+    }
+    .page {
+      width: min(760px, calc(100% - 24px));
+      margin: 22px auto 36px;
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      box-shadow: 0 10px 28px rgba(17, 24, 39, .04);
+      overflow: hidden;
+    }
+    .header {
+      text-align: center;
+      padding: 26px 20px 20px;
+      border-bottom: 1px solid var(--line);
+    }
+    .header h1 {
+      margin: 0;
+      font-size: 50px;
+      line-height: 1.15;
+      letter-spacing: -.02em;
+    }
+    .header p {
+      margin: 10px auto 0;
+      font-size: 24px;
+      line-height: 1.45;
+      color: var(--muted);
+      max-width: 92%;
+    }
+    .form-wrap { padding: 24px 72px 28px; }
+    .field { margin-bottom: 16px; }
+    .label {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-weight: 700;
+      font-size: 24px;
+      margin-bottom: 8px;
+    }
+    .label .req { color: var(--danger); }
+    .input, .select, .textarea {
+      width: 100%;
+      border: 1px solid #eceff3;
+      background: #f6f7fb;
+      border-radius: 14px;
+      padding: 14px 18px;
+      font-size: 22px;
+      color: #111827;
+      font-family: inherit;
+      outline: none;
+      transition: border-color .2s ease, box-shadow .2s ease;
+    }
+    .input:focus, .select:focus, .textarea:focus {
+      border-color: #cfd6df;
+      box-shadow: 0 0 0 3px rgba(31, 41, 55, .05);
+    }
+    .select { color: #4b5563; }
+    .textarea { min-height: 180px; resize: vertical; }
+    .hint-error {
+      margin-top: 8px;
+      color: var(--danger);
+      font-size: 18px;
+      min-height: 24px;
+    }
+    .upload-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      margin-top: 6px;
+    }
+    .upload-btn {
+      width: 86px;
+      height: 86px;
+      border: 1px solid #eceff3;
+      border-radius: 12px;
+      background: #f6f7fb;
+      color: #6b7280;
+      font-size: 42px;
+      line-height: 1;
+      cursor: pointer;
+    }
+    .upload-list {
+      margin: 4px 0 0;
+      padding: 0;
+      list-style: none;
+      font-size: 18px;
+      color: #4b5563;
+      line-height: 1.5;
+    }
+    .captcha {
+      margin: 18px 0 16px;
+      border: 1px solid #d9dde4;
+      border-radius: 10px;
+      background: #f8fafc;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 20px;
+      color: #374151;
+    }
+    .captcha-left {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .captcha-check {
+      width: 28px;
+      height: 28px;
+      border-radius: 999px;
+      background: #3aa757;
+      color: #fff;
+      font-size: 18px;
+      display: grid;
+      place-items: center;
+      font-weight: 700;
+    }
+    .captcha-brand {
+      font-size: 16px;
+      color: #4b5563;
+      font-weight: 700;
+      letter-spacing: .03em;
+    }
+    .submit-btn {
+      width: 100%;
+      border: 0;
+      border-radius: 12px;
+      background: var(--btn);
+      color: #fff;
+      font-size: 28px;
+      font-weight: 700;
+      line-height: 1;
+      padding: 18px 14px;
+      cursor: pointer;
+      transition: background .2s ease;
+    }
+    .submit-btn:hover { background: var(--btn-hover); }
+    .submit-msg {
+      margin-top: 12px;
+      font-size: 18px;
+      color: #148046;
+      min-height: 24px;
+    }
+    .footer-note {
+      margin-top: 14px;
+      color: #6b7280;
+      font-size: 18px;
+      line-height: 1.55;
+    }
+    .back-row {
+      margin: 18px auto 0;
+      width: min(760px, calc(100% - 24px));
+      font-size: 18px;
+    }
+    .back-row a {
+      color: #374151;
+      text-decoration: none;
+    }
+    .back-row a:hover { color: #111827; text-decoration: underline; }
+
+    @media (max-width: 860px) {
+      .header h1 { font-size: 34px; }
+      .header p { font-size: 16px; }
+      .form-wrap { padding: 18px 16px 20px; }
+      .label { font-size: 18px; }
+      .input, .select, .textarea { font-size: 16px; padding: 12px 14px; border-radius: 10px; }
+      .hint-error, .upload-list, .submit-msg, .footer-note, .back-row { font-size: 14px; }
+      .upload-btn { width: 68px; height: 68px; font-size: 30px; }
+      .captcha { font-size: 15px; padding: 10px 12px; }
+      .captcha-check { width: 22px; height: 22px; font-size: 14px; }
+      .captcha-brand { font-size: 12px; }
+      .submit-btn { font-size: 20px; padding: 14px 10px; border-radius: 10px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="back-row"><a href="./guide-redesign.html?topic=billing">← 返回账单与订阅</a></div>
+
+  <main class="page">
+    <header class="header">
+      <h1>联系我们</h1>
+      <p>有任何建议或需要帮助吗？请联系我们，我们很重视您的反馈，并竭诚为您服务。</p>
+    </header>
+
+    <section class="form-wrap">
+      <form id="refundForm" novalidate>
+        <div class="field">
+          <label class="label" for="issueType"><span class="req">*</span>问题类型</label>
+          <select id="issueType" class="select" required>
+            <option value="">==== 类型请选择 ====</option>
+            <option value="refund">退款申请</option>
+            <option value="billing">账单问题</option>
+            <option value="subscription">订阅问题</option>
+            <option value="other">其他</option>
+          </select>
+          <div class="hint-error" id="issueTypeError"></div>
+        </div>
+
+        <div class="field">
+          <label class="label" for="issueSummary"><span class="req">*</span>问题概要</label>
+          <input id="issueSummary" class="input" type="text" placeholder="请简要描述你的问题" required />
+        </div>
+
+        <div class="field">
+          <label class="label" for="issueDetails"><span class="req">*</span>详细信息</label>
+          <textarea id="issueDetails" class="textarea" placeholder="请提供订单号、购买时间、退款原因等信息" required></textarea>
+        </div>
+
+        <div class="field">
+          <label class="label" for="email"><span class="req">*</span>电子邮箱</label>
+          <input id="email" class="input" type="email" placeholder="请输入你的邮箱" required />
+        </div>
+
+        <div class="field">
+          <label class="label" for="attachments">上传</label>
+          <div class="upload-row">
+            <button class="upload-btn" id="uploadTrigger" type="button">+</button>
+            <input id="attachments" type="file" accept="image/*,.pdf,.doc,.docx,.txt" multiple hidden />
+            <ul class="upload-list" id="uploadList"></ul>
+          </div>
+        </div>
+
+        <div class="captcha">
+          <div class="captcha-left">
+            <span class="captcha-check">✓</span>
+            <strong>成功！</strong>
+          </div>
+          <span class="captcha-brand">CLOUDFLARE</span>
+        </div>
+
+        <button class="submit-btn" type="submit">提交</button>
+        <div class="submit-msg" id="submitMsg"></div>
+
+        <p class="footer-note">
+          若邮件量大，请允许 3-7 个工作日回复。如果需要更快的帮助，请直接联系支持团队。
+        </p>
+      </form>
+    </section>
+  </main>
+
+  <script>
+    const form = document.getElementById("refundForm");
+    const issueType = document.getElementById("issueType");
+    const issueTypeError = document.getElementById("issueTypeError");
+    const uploadTrigger = document.getElementById("uploadTrigger");
+    const attachments = document.getElementById("attachments");
+    const uploadList = document.getElementById("uploadList");
+    const submitMsg = document.getElementById("submitMsg");
+
+    uploadTrigger.addEventListener("click", () => attachments.click());
+    attachments.addEventListener("change", () => {
+      const files = Array.from(attachments.files || []);
+      uploadList.innerHTML = files.map((file) => `<li>${file.name}</li>`).join("");
+    });
+
+    form.addEventListener("submit", (event) => {
+      event.preventDefault();
+      issueTypeError.textContent = "";
+      submitMsg.textContent = "";
+
+      if (!issueType.value) {
+        issueTypeError.textContent = "请选择一个具体的问题类型";
+        issueType.focus();
+        return;
+      }
+
+      if (!form.reportValidity()) return;
+
+      const payload = {
+        issueType: issueType.value,
+        issueSummary: document.getElementById("issueSummary").value.trim(),
+        issueDetails: document.getElementById("issueDetails").value.trim(),
+        email: document.getElementById("email").value.trim(),
+        files: Array.from(attachments.files || []).map((file) => file.name),
+        submittedAt: new Date().toISOString()
+      };
+
+      const historyList = JSON.parse(localStorage.getItem("refund_requests") || "[]");
+      historyList.push(payload);
+      localStorage.setItem("refund_requests", JSON.stringify(historyList));
+
+      form.reset();
+      uploadList.innerHTML = "";
+      submitMsg.textContent = "提交成功，我们已收到你的信息，会尽快安排处理。";
+    });
+  </script>
+</body>
+</html>
